@@ -2761,9 +2761,7 @@ function downloadLatestCsv() {
     latestRecord.wrongLog
   ].map(val => `"${String(val).replace(/"/g, '""')}"`).join(',');
 
-  const csvContent = '﻿' + headers.join(',') + '
-' + row + '
-';
+  const csvContent = '\ufeff' + headers.join(',') + '\n' + row + '\n';
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
 
