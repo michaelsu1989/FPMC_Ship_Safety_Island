@@ -147,19 +147,36 @@
     display: none;
   }
 
-  .btn-lang {
-    background: white;
-    color: var(--primary);
-    border: none;
-    padding: 0.45rem 0.9rem;
-    border-radius: 6px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    cursor: pointer;
+  /* Trilingual Switcher */
+  .lang-switch {
+    display: flex;
+    background: rgba(255,255,255,0.15);
+    padding: 0.2rem;
+    border-radius: 7px;
+    border: 1px solid rgba(255,255,255,0.25);
+    gap: 0.2rem;
   }
 
-  .btn-lang:hover {
-    background: #e0f2fe;
+  .lang-btn {
+    background: transparent;
+    color: #e2e8f0;
+    border: none;
+    padding: 0.35rem 0.65rem;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .lang-btn:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .lang-btn.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
   }
 
   /* Main Container */
@@ -982,7 +999,11 @@
       <span class="progress-dot" id="progress-dot"></span>
       <span id="ui-progress">測驗進度：0 / 5 區（0 / 10 題）</span>
     </div>
-    <button class="btn-lang" onclick="toggleLang()" id="btn-lang">English</button>
+    <div class="lang-switch">
+      <button class="lang-btn active" id="btn-lang-zh" onclick="setLang('zh')">繁中</button>
+      <button class="lang-btn" id="btn-lang-en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-lang-id" onclick="setLang('id')">Bahasa ID</button>
+    </div>
   </div>
 </header>
 
@@ -1189,11 +1210,49 @@
 
       <div class="form-grid">
         <div class="form-group">
-          <label id="lbl-ship">船名 (Ship's Name)</label>
-          <input type="text" id="inp-ship" placeholder="例如：台塑安華輪 / FPMC ...">
+          <label id="lbl-ship">船名 (Ship's Name / Nama Kapal)</label>
+          <select id="inp-ship">
+            <option value="" disabled selected>-- 請選擇船名 / Select Vessel / Pilih Kapal --</option>
+            <option value="安華輪">安華輪</option>
+            <option value="康華輪">康華輪</option>
+            <option value="恆華輪">恆華輪</option>
+            <option value="福華輪">福華輪</option>
+            <option value="台塑27號">台塑27號</option>
+            <option value="台塑28號">台塑28號</option>
+            <option value="台塑29號">台塑29號</option>
+            <option value="台塑30號">台塑30號</option>
+            <option value="台塑31號">台塑31號</option>
+            <option value="台塑32號">台塑32號</option>
+            <option value="台塑33號">台塑33號</option>
+            <option value="台塑34號">台塑34號</option>
+            <option value="台塑35號">台塑35號</option>
+            <option value="台塑36號">台塑36號</option>
+            <option value="智善輪">智善輪</option>
+            <option value="真善輪">真善輪</option>
+            <option value="君善輪">君善輪</option>
+            <option value="悅善輪">悅善輪</option>
+            <option value="崇善輪">崇善輪</option>
+            <option value="亞善輪">亞善輪</option>
+            <option value="長輝輪">長輝輪</option>
+            <option value="守輝輪">守輝輪</option>
+            <option value="和輝輪">和輝輪</option>
+            <option value="映輝輪">映輝輪</option>
+            <option value="正輝輪">正輝輪</option>
+            <option value="皇輝輪">皇輝輪</option>
+            <option value="祥輝輪">祥輝輪</option>
+            <option value="君輝輪">君輝輪</option>
+            <option value="純輝輪">純輝輪</option>
+            <option value="台塑105號">台塑105號</option>
+            <option value="台塑106號">台塑106號</option>
+            <option value="台塑107號">台塑107號</option>
+            <option value="台塑108號">台塑108號</option>
+            <option value="台塑201號">台塑201號</option>
+            <option value="台塑202號">台塑202號</option>
+            <option value="岸休船員">岸休船員</option>
+          </select>
         </div>
         <div class="form-group">
-          <label id="lbl-rank">職稱 (Rank)</label>
+          <label id="lbl-rank">職稱 (Rank / Jabatan)</label>
           <select id="inp-rank">
             <option value="船長 Master">船長 Master</option>
             <option value="大副 Chief Officer">大副 Chief Officer</option>
@@ -1207,11 +1266,11 @@
           </select>
         </div>
         <div class="form-group">
-          <label id="lbl-name">船員姓名 (Seafarer's Name)</label>
-          <input type="text" id="inp-name" placeholder="請輸入全名">
+          <label id="lbl-name">船員姓名 (Seafarer's Name / Nama Pelaut)</label>
+          <input type="text" id="inp-name" placeholder="請輸入全名 / Enter Full Name">
         </div>
         <div class="form-group">
-          <label id="lbl-date">上船日期 (Date of Joining)</label>
+          <label id="lbl-date">上船日期 (Date of Joining / Tgl Naik Kapal)</label>
           <input type="date" id="inp-date">
         </div>
       </div>
@@ -1239,14 +1298,14 @@
 <script>
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwy-X4fbEZdwa7dT5tPlckbk8lEl2ri5bX3wluuEZyW5FWRD_MtpifJ1zIjF9hvAxlu/exec";
 
-let lang = 'zh';
-let currentSection = 'quiz'; // 'briefing' or 'quiz'
+let lang = 'zh'; // 'zh', 'en', or 'id'
+let currentSection = 'quiz';
 let currentZone = 0;
-let activeTab = 'quiz'; // Default open quiz or cases in right panel
+let activeTab = 'quiz';
 let selectedBodyPart = 'all';
 let latestRecord = null;
 
-// Data for Section 1: Briefing & Awareness Materials
+// Data for Section 1: Briefing & Awareness Materials (Trilingual: zh, en, id)
 const briefingData = {
   zh: {
     stats: [
@@ -1499,10 +1558,136 @@ const briefingData = {
         fix: "Fall Prevention: 1) Wear a full-body harness with double lanyards on unguarded hold ladders. 2) Never pull on middle guardrails; wear lifejackets overside."
       }
     ]
+  },
+  id: {
+    stats: [
+      { label: "1. Terjepit / Tergencet (Roll, Clamp, Press)", pct: 29.3, top: true },
+      { label: "2. Terbentur / Tertabrak (Be Hit)", pct: 18.7, top: true },
+      { label: "3. Jatuh dari Ketinggian (Fall)", pct: 13.3, top: false },
+      { label: "4. Terpeleset & Tersandung (Fall Down)", pct: 12.0, top: false },
+      { label: "5. Terpotong / Tergores (Cut / Abrasion)", pct: 9.3, top: false },
+      { label: "6. Paparan Suhu Tinggi / Rendah", pct: 5.3, top: false },
+      { label: "7. Benda Asing Masuk ke Mata", pct: 5.0, top: false },
+      { label: "8. Tindakan Tidak Tepat (Improper Action)", pct: 2.7, top: false },
+      { label: "9. Benda Jatuh (Falling Objects)", pct: 2.7, top: false },
+      { label: "10. Paparan Bahan Berbahaya", pct: 1.3, top: false }
+    ],
+    basicRules: [
+      "Sebelum bekerja, wajib mengadakan Toolbox Meeting (TBM); Mualim I (C/O) & Masinis II (2/E) harus menjelaskan prosedur kerja dan mewajibkan pemakaian APD (PPE).",
+      "Pahami dan patuhi SOP Dek/Kamar Mesin, Buku Panduan Keselamatan, serta prosedur perusahaan.",
+      "Untuk 14 Pekerjaan Berisiko Tinggi di bawah ini, C/O atau 2/E wajib memeriksa kelengkapan APD kru secara langsung sebelum pekerjaan dimulai.",
+      "Untuk pekerjaan lainnya, pekerja wajib memeriksa sendiri kelengkapan APD sebelum mulai bekerja.",
+      "Batas Wajib: Angkat manual maks 20 kg; Full-body harness & prinsip 3 titik kontak di atas 2 meter; Ruang tertutup O2 18%–23%, LEL < 30%, H2S < 10ppm, CO < 35ppm."
+    ],
+    highRiskOps: [
+      "Kerja Panas (Hot Work)", "Ruang Tertutup (Enclosed Space)", "Kerja Dingin", "Kerja di Luar Lambung", "Kerja di Ketinggian",
+      "Peralatan & Sirkuit Listrik", "Kerja Bawah Air", "Pipa & Bejana Tekan", "Sandar Kapal Kecil",
+      "Kerja Dek Cuaca Buruk", "Pengangkatan (Lifting)", "Pengukuran Gas", "Tegangan Tinggi (>1000V)"
+    ],
+    bodyParts: [
+      { id: "all", label: "Semua Bagian Tubuh (13)" },
+      { id: "head", label: "Kepala & Mata (2)" },
+      { id: "upper", label: "Bahu, Dada & Lengan (3)" },
+      { id: "finger", label: "Jari & Tangan (5)" },
+      { id: "leg", label: "Kaki & Jatuh ke Laut (3)" }
+    ],
+    cases: [
+      {
+        part: "head",
+        partLabel: "Kepala | Pengangkatan di Palka",
+        title: "Bosun Tertimpa Saringan (Filter) Jatuh di Palka",
+        desc: "AB/OS baru (kurang pengalaman) mengikat simpul tali secara tidak kuat saat mengangkat saringan 3 kg dari palka. Simpul terlepas di ambang palka dan menimpa helm Bosun hingga kepalanya terluka.",
+        fix: "Tindakan Pencegahan: Kru senior wajib memeriksa ikatan simpul; dilarang keras masuk ke bawah area pengangkatan dan wajib gunakan walkie-talkie."
+      },
+      {
+        part: "head",
+        partLabel: "Mata | Pengelasan Kamar Mesin",
+        title: "Fitter Terkena Serpihan Terak Las di Mata Kanan",
+        desc: "Setelah mengelas pipa air tawar di kamar mesin, Fitter mengetok terak las hanya menggunakan kedok tangan tanpa kacamata safety (goggles), sehingga serpihan masuk ke mata kanan.",
+        fix: "Revisi SOP Las: Wajib memakai helm las (atau kedok tangan DITAMBAH kacamata safety) saat mengelas maupun mengetok terak las."
+      },
+      {
+        part: "upper",
+        partLabel: "Bahu | Platform Manifold",
+        title: "AB Jatuh 1,7m dari Manifold Saat Bantu Lepas Selang Darat",
+        desc: "Saat membantu pekerja terminal mengendurkan baut penyangga selang darat, kunci pas tergelincir dan AB jatuh setinggi 1,7 meter ke dek utama, mengakibatkan patah tulang selangka kanan.",
+        fix: "Larangan Keras: Penyambungan/pelepasan selang darat adalah tugas pihak terminal; kru dilarang melakukan pekerjaan di luar lingkup tugas kapal."
+      },
+      {
+        part: "upper",
+        partLabel: "Dada | Pembukaan Tutup Palka",
+        title: "Bosun Tersandung & Membentur Penguat Dek Saat Buka Palka",
+        desc: "Kelelahan setelah operasi pandu, bongkar muat, dan pencucian tangki berturut-turut, Bosun tersandung saat membuka tutup palka 5S dan tulang rusuk kirinya membentur besi penguat dek.",
+        fix: "Pencegahan: Atur jam kerja dan istirahat dengan baik untuk mencegah kelelahan, serta perhatikan rintangan besi penguat di dek."
+      },
+      {
+        part: "upper",
+        partLabel: "Lengan | Dek Utama Licin",
+        title: "OS Terpeleset di Dek Basah & Tersandung Kawat Baja",
+        desc: "Saat mengikat tangga akomodasi kiri di dek yang basah, OS terpeleset karena daya cengkeram sepatu kurang baik dan tersandung kawat baja, melukai siku kirinya.",
+        fix: "Peningkatan APD: Diberikan sepatu safety baru anti-slip tahan minyak; berjalanlah di jalur khusus anti-selip."
+      },
+      {
+        part: "finger",
+        partLabel: "Jari | Pintu Menutup Otomatis (Blackout)",
+        title: "Jari Telunjuk Oiler Terjepit Pintu Kamar Mesin Saat Blackout",
+        desc: "Saat kapal mengalami blackout total, Oiler berlari dalam gelap ke kamar mesin dan menahan pintu otomatis (yang menutup cepat akibat tekanan udara) dengan tangan kiri hingga jarinya terjepit.",
+        fix: "Aturan Blackout: Tunggu maksimal 45 detik hingga generator darurat & lampu menyala; jangan pernah menahan tepi pintu dengan tangan (diperiksa mingguan di MMP-FM20)."
+      },
+      {
+        part: "finger",
+        partLabel: "Jari | Mesin Jangkar (Chain Stopper)",
+        title: "Tangan OS Terjepit Tuas Chain Stopper Saat Angkat Jangkar",
+        desc: "Saat persiapan angkat jangkar di kapal LPG, OS baru mengangkat chain stopper dan tangannya terjepit antara tuas yang posisinya terlalu rendah dengan dudukan roller.",
+        fix: "Perbaikan Alat: Tuas yang terlalu rendah telah dipotong untuk menghilangkan titik jepit; awasi kru baru selama bulan pertama."
+      },
+      {
+        part: "finger",
+        partLabel: "Jari | Ketok Karat Roller Palka",
+        title: "Jari Kelingking AB Patah Saat Ketok Karat Roller Palka",
+        desc: "Saat mengetok karat roller tutup palka dengan pistol pneumatik, alat tergelincir dan roller berputar menjepit jari kelingking kanan AB ke celah rel.",
+        fix: "Alat Pengaman: Pasang ganjal/penahan (stopper) khusus di antara roller dan rel sebelum mengetok karat roller."
+      },
+      {
+        part: "finger",
+        partLabel: "Jari | Buka/Tutup Palka",
+        title: "Kadet Perwira (Junior 3/O) Tergencet 3 Jari di Rel Palka",
+        desc: "Saat memeriksa alat sapu palka ketika tutup palka No. 1 dibuka, tangan kanan Junior 3/O bertumpu di rel palka dan tergencet roller yang bergerak.",
+        fix: "Aturan Wajib: Cat garis batas CLEAR AREA minimal 80 cm dari ambang palka; wajib 2 pengawas sisi dan konfirmasi walkie-talkie sebelum menggerakkan palka."
+      },
+      {
+        part: "finger",
+        partLabel: "Jari | Mesin Bor & Drum Oli 200kg",
+        title: "Sarung Tangan Fitter Terlilit Bor & Terjepit Drum Oli 200kg",
+        desc: "1) Sarung tangan katun terlilit kepala bor yang berputar hingga jari tengah patah. 2) Hanya 3 kru mengangkat manual 35 drum oli (200 kg/drum) hingga ibu jari Fitter terjepit.",
+        fix: "Aturan Ketat: 1) Sesuai SHM-004, DILARANG memakai sarung tangan saat mengoperasikan mesin bor, bubut, atau gerinda. 2) Drum 200 kg wajib disuplai via truk tangki atau troli drum."
+      },
+      {
+        part: "leg",
+        partLabel: "Kaki | Tangga Kamar Mesin",
+        title: "KKM (Chief Engineer) Terkilir Pergelangan Kaki di Tangga",
+        desc: "Saat menuruni tangga dari dek utama menuju kamar mesin, Chief Engineer salah menginjak anak tangga sehingga pergelangan kaki kanannya terkilir parah.",
+        fix: "Keselamatan Tangga: Pegang pegangan tangga (handrail) dengan kuat dan perhatikan setiap anak tangga kamar mesin yang curam."
+      },
+      {
+        part: "leg",
+        partLabel: "Kaki | Ombak Cuaca Buruk",
+        title: "Pumpman Patah Kaki Terhantam Ombak Saat Buka Pintu Kedap",
+        desc: "Saat cuaca buruk, dua Pumpman membuka pintu kedap air dek luar dengan posisi membelakangi laut dan terhantam ombak besar mendadak hingga patah kedua kaki.",
+        fix: "Kewaspadaan Cuaca: Periksa kondisi ombak sebelum membuka pintu dek luar dan jangan pernah membelakangi arah ombak."
+      },
+      {
+        part: "leg",
+        partLabel: "Kaki & Jatuh ke Laut | Tangga Palka & Railing",
+        title: "Jatuh dari Tangga Palka & Railing Patah Jatuh ke Laut (MOB)",
+        desc: "1) AB terburu-buru menuruni tangga Australia di palka hingga terpeleset dan retak tulang tumit. 2) Kru berpegangan pada railing tengah saat naik kapal; railing patah dan jatuh ke laut.",
+        fix: "Pencegahan Jatuh: 1) Gunakan full-body harness dengan double lanyard di tangga vertikal palka tanpa pelindung. 2) Jangan tarik railing tengah; pakai lifejacket saat kerja di sisi kapal."
+      }
+    ]
   }
 };
 
-// Data for Section 2: Interactive Ship Map & 10 Curated Quiz Questions
+// Data for Section 2: Interactive Ship Map & 10 Curated Quiz Questions (Trilingual: zh, en, id)
 const zonesData = [
   {
     id: 0,
@@ -1579,6 +1764,44 @@ const zonesData = [
           ],
           answer: 1,
           feedback: "Correct! Never operate mooring winches with personnel inside the snap-back zone."
+        }
+      ]
+    },
+    id: {
+      name: "1. Haluan, Tambat & Jangkar",
+      tag: "Zona 01 | Chain Stopper & Operasi Tambat",
+      stats: ["Terjepit (29.3%)", "Terbentur (18.7%)", "Benda Jatuh (2.7%)"],
+      cases: [
+        "[Tangan Terjepit Chain Stopper] Saat persiapan angkat jangkar di kapal LPG, OS baru mengangkat chain stopper dan tangannya terjepit antara tuas yang terlalu rendah dengan dudukan roller.",
+        "[Tali Putus & Tali Buangan] Tali tambat putus menyambar helm C/O hingga pecah; segel tali buangan mengenai pelipis kru kapal tunda karena tidak memastikan posisi kru."
+      ],
+      rules: [
+        "Saat mengangkat/menurunkan chain stopper jangkar, perhatikan jarak bebas antara tuas dan dudukan roller serta hindari titik jepit jari.",
+        "Dilarang keras berada di Zona Terlarang Tambat (area pantulan tali putus / snap-back zone) saat winch beroperasi; pastikan posisi kru tugboat aman sebelum melempar tali buangan.",
+        "Kru baru yang melakukan pekerjaan dek berisiko tinggi wajib didampingi dan diawasi oleh kru senior."
+      ],
+      quizzes: [
+        {
+          code: "Z1-Q1",
+          q: "Q1. Saat mengangkat chain stopper mesin jangkar, bagaimana cara mencegah jari terjepit antara tuas dan dudukan roller?",
+          options: [
+            "Pegang bagian bawah tuas dengan erat dan tekan sampai mentok ke dasar",
+            "Perhatikan jarak bebas gerakan tuas dengan dudukan, lepaskan tangan sebelum titik jepit, dan ikuti arahan kru senior",
+            "Pakai sarung tangan katun tebal lalu masukkan jari ke celah dudukan untuk membantu menahan"
+          ],
+          answer: 1,
+          feedback: "Benar! Celah antara tuas chain stopper dan dudukan sangat sempit; selalu hindari titik jepit."
+        },
+        {
+          code: "Z1-Q2",
+          q: "Q2. Saat winch tambat akan mengencangkan tali dan terlihat kru berdiri di area pantulan tali (snap-back zone), apa tindakan Anda?",
+          options: [
+            "Percepat putaran winch agar tali segera kencang",
+            "Gunakan Stop Work Authority (SWA), hentikan winch segera, dan minta kru keluar dari zona terlarang tambat",
+            "Minta kru tersebut mengencangkan tali helmnya saja dan tetap berdiri di tempat"
+          ],
+          answer: 1,
+          feedback: "Benar! Dilarang mengoperasikan winch jika ada personel di dalam zona bahaya pantulan tali tambat."
         }
       ]
     }
@@ -1664,6 +1887,46 @@ const zonesData = [
           feedback: "Correct! A 3 kg falling filter can knock off a helmet and lacerate the head; always chock rollers before derusting."
         }
       ]
+    },
+    id: {
+      name: "2. Palka & Tutup Palka",
+      tag: "Zona 02 | Clear Area 80cm, Ganjal Roller & Pengangkatan",
+      stats: ["Terjepit (29.3%)", "Jatuh (13.3%)", "Benda Jatuh (2.7%)"],
+      cases: [
+        "[Jari Tergencet Roller Palka] Junior 3/O menumpukan tangan kanan di rel palka saat pembukaan palka hingga 3 jarinya tergencet roller (wajib cat garis CLEAR AREA minimal 80 cm dan konfirmasi walkie-talkie 2 pengawas).",
+        "[Ketok Karat Roller & Filter Jatuh] AB patah kelingking saat mengetok karat roller palka tanpa ganjal; saringan 3 kg jatuh dari derek palka karena simpul lepas dan melukai kepala Bosun.",
+        "[Jatuh dari Tangga Palka] AB terpeleset saat menuruni tangga Australia di palka dan mengalami retak tulang tumit."
+      ],
+      rules: [
+        "Cat garis area terbatas (CLEAR AREA) minimal 80 cm dari ambang palka; wajib minimal 2 pengawas sisi melapor via walkie-talkie dan diulangi (read-back) oleh operator sebelum menggerakkan palka.",
+        "Pasang ganjal/penahan (stopper) di celah antara roller dan rel sebelum mengetok karat roller dalam kondisi palka tertutup; dilarang bertumpu pada rel.",
+        "Ikat simpul tali dengan kuat sebelum mengangkat alat dari palka, dilarang masuk ke bawah area pengangkatan, dan gunakan walkie-talkie.",
+        "Gunakan full-body harness dengan double lanyard saat naik/turun tangga palka tanpa pelindung (prinsip 3 titik kontak); pastikan O2 18%–23% sebelum masuk ruang tertutup."
+      ],
+      quizzes: [
+        {
+          code: "Z2-Q1",
+          q: "Q1. Sesuai aturan terbaru buka/tutup palka, berapa jarak minimal garis CLEAR AREA dari ambang palka dan prosedur sebelum menggerakkan palka?",
+          options: [
+            "30 cm dari ambang palka; operator boleh langsung menekan tombol jika merasa aman",
+            "Minimal 80 cm dicat CLEAR AREA; pengawas kedua sisi memastikan area bersih via walkie-talkie dan operator mengulang konfirmasi (read-back) sebelum mulai",
+            "50 cm dari ambang palka; cukup meniup peluit sambil kru tetap merapikan alat di dekat rel"
+          ],
+          answer: 1,
+          feedback: "Benar! Garis batas minimal 80 cm dan konfirmasi walkie-talkie dua sisi wajib dijalankan sebelum palka digerakkan."
+        },
+        {
+          code: "Z2-Q2",
+          q: "Q2. Manakah prosedur keselamatan yang benar saat mengangkat saringan (filter) dari palka dan mengetok karat roller tutup palka?",
+          options: [
+            "Masuk ke bawah area derek setelah barang terangkat; tahan roller dengan tangan saat mengetok karat",
+            "Ikat simpul dengan kuat, dilarang masuk ke area bawah derek, gunakan walkie-talkie, serta pasang ganjal (stopper) pada roller sebelum ketok karat",
+            "Saringan 3 kg sangat ringan sehingga tidak berbahaya jika jatuh mengenai helm"
+          ],
+          answer: 1,
+          feedback: "Benar! Saringan 3 kg yang jatuh dari ketinggian palka terbukti mampu melukai kepala; roller juga wajib diganjal sebelum diketok karat."
+        }
+      ]
     }
   },
   {
@@ -1747,6 +2010,46 @@ const zonesData = [
           feedback: "Correct! Safety goggles are required even during slag chipping, and 200 kg drums require tank truck supply or a drum carrier."
         }
       ]
+    },
+    id: {
+      name: "3. Kamar Mesin, Bengkel & Drum Oli",
+      tag: "Zona 03 | Mesin Bor, Ketok Terak Las & Drum 200kg",
+      stats: ["Terjepit (29.3%)", "Tergores (9.3%)", "Cedera Mata (5.0%)", "Luka Bakar (5.3%)"],
+      cases: [
+        "[Sarung Tangan Terlilit Mesin Bor] Fitter memakai sarung tangan katun saat mengebor hingga tangan kirinya terlilit kepala bor dan jari tengah patah (SHM-004 melarang keras sarung tangan pada mesin bor/bubut/gerinda).",
+        "[Serpihan Terak Las Masuk Mata] Fitter mengetok terak las hanya dengan kedok tangan tanpa kacamata safety (goggles) hingga serpihan masuk ke mata kanan.",
+        "[Terjepit Drum Oli 200kg & Luka Bakar] 3 kru mengangkat manual 35 drum oli 200 kg hingga ibu jari Fitter terjepit; Masinis I tersiram sisa bahan bakar panas saat bongkar katup boiler."
+      ],
+      rules: [
+        "Sesuai prosedur SHM-004, DILARANG KERAS memakai sarung tangan jenis apa pun saat mengoperasikan mesin bor, mesin bubut, atau gerinda; turunkan pelindung pengaman (safety guard).",
+        "Saat mengelas maupun mengetok terak las, wajib memakai helm las (atau kedok tangan DITAMBAH kacamata safety/goggles).",
+        "Drum oli 53 galon penuh beratnya ~200 kg: wajib disuplai menggunakan truk tangki jika diizinkan terminal, atau gunakan alat bantu angkut drum (batas angkat manual umum 20 kg).",
+        "Matikan sumber listrik, panas, dan katup fluida serta buang tekanan/sisa cairan pipa sebelum membongkar boiler atau pipa."
+      ],
+      quizzes: [
+        {
+          code: "Z3-Q1",
+          q: "Q1. Sesuai prosedur SHM-004, apa aturan wajib terkait sarung tangan dan pelindung mesin saat mengoperasikan mesin bor di bengkel?",
+          options: [
+            "Wajib memakai sarung tangan katun agar tidak licin dan angkat pelindung transparan agar mata bor terlihat jelas",
+            "Dilarang keras memakai sarung tangan apa pun (mencegah terlilit putaran chuck) dan wajib menurunkan pelindung pengaman",
+            "Boleh memakai sarung tangan kulit asalkan putaran mesin bor diatur pelan"
+          ],
+          answer: 1,
+          feedback: "Benar! SHM-004 melarang keras penggunaan sarung tangan pada mesin bor, bubut, dan gerinda."
+        },
+        {
+          code: "Z3-Q2",
+          q: "Q2. Bagaimana standar keselamatan yang benar saat mengetok terak las dan menangani drum oli pelumas 53 galon (~200 kg)?",
+          options: [
+            "Mengetok terak las cukup pakai kedok tangan tanpa kacamata safety; drum 200 kg digelindingkan dan diberdirikan manual oleh 2–3 orang",
+            "Wajib memakai helm las (atau kedok tangan + kacamata safety) saat ketok terak las; drum 200 kg wajib pakai truk tangki atau alat bantu angkut drum",
+            "Tidak perlu kacamata safety saat mengetok terak las; pegang tepi bibir drum saat memberdirikan drum"
+          ],
+          answer: 1,
+          feedback: "Benar! Kacamata safety wajib dipakai saat mengetok terak las, dan drum 200 kg wajib disuplai via truk tangki atau troli drum."
+        }
+      ]
     }
   },
   {
@@ -1826,6 +2129,45 @@ const zonesData = [
           ],
           answer: 1,
           feedback: "Correct! Grabbing a weak middle guardrail caused an MOB incident, and turning one's back to waves when opening doors caused severe fractures."
+        }
+      ]
+    },
+    id: {
+      name: "4. Dek Utama, Manifold & Jatuh ke Laut",
+      tag: "Zona 04 | Larangan Selang Darat, Dek Licin & Cegah MOB",
+      stats: ["Jatuh (13.3%)", "Terpeleset (12.0%)", "Bahan Berbahaya (1.3%)"],
+      cases: [
+        "[Jatuh 1,7m dari Manifold] Kru membantu pekerja darat membuka baut penyangga selang darat; kunci pas selip dan AB jatuh setinggi 1,7m hingga tulang selangka kanan patah (kru dilarang melakukan tugas pihak darat di luar lingkup kerja).",
+        "[Dek Basah & Railing Patah] AB terpeleset di dek basah dan tersandung kawat saat ikat tangga; kru lain memegang railing tengah saat naik kapal hingga railing patah dan jatuh ke laut (MOB).",
+        "[Terhantam Ombak Cuaca Buruk] Dua Pumpman membuka pintu kedap air sambil membelakangi laut saat ombak besar, lalu terhempas hingga patah kedua kaki."
+      ],
+      rules: [
+        "Dilarang keras kru kapal melakukan pekerjaan di luar lingkup tugasnya (seperti menyambung/melepas selang darat yang merupakan tugas pihak terminal).",
+        "Dilarang menarik atau bertumpu pada railing tengah saat naik/turun kapal; wajib pakai lifejacket dan safety harness saat bekerja di sisi kapal atau tangga pandu.",
+        "Gunakan sepatu safety anti-slip tahan minyak di dek basah, berjalanlah di jalur khusus/jembatan pipa, dan periksa ombak sebelum membuka pintu dek luar (jangan membelakangi ombak)."
+      ],
+      quizzes: [
+        {
+          code: "Z4-Q1",
+          q: "Q1. Saat bongkar muat di terminal, pekerja darat meminta kru kapal membantu membuka baut penyangga selang darat. Bagaimana aturan perusahaan?",
+          options: [
+            "Naik ke platform manifold dan bantu mengendurkan baut agar bongkar muat lebih cepat",
+            "Tolak dan laporkan: penyambungan/pelepasan selang darat adalah tugas pihak terminal, kru kapal dilarang melakukan pekerjaan di luar lingkup tugas",
+            "Tarik kunci pas sambil membelakangi dek utama agar lebih bertenaga"
+          ],
+          answer: 1,
+          feedback: "Benar! Perusahaan melarang keras kru kapal mengerjakan tugas pihak darat di luar lingkup tanggung jawab kapal."
+        },
+        {
+          code: "Z4-Q2",
+          q: "Q2. Tindakan mana yang mencegah jatuh ke laut (MOB) dan cedera hantaman ombak saat naik/turun kapal atau cuaca buruk?",
+          options: [
+            "Pegang railing tengah dengan kedua tangan untuk menarik tubuh naik ke kapal",
+            "Jangan bertumpu pada railing tengah, pakai lifejacket/safety harness di sisi kapal, dan periksa kondisi ombak sebelum membuka pintu dek luar",
+            "Langkahi kawat baja di dek yang basah dengan cepat"
+          ],
+          answer: 1,
+          feedback: "Benar! Railing tengah yang patah menyebabkan kru jatuh ke laut, dan membuka pintu membelakangi ombak menyebabkan patah kaki."
         }
       ]
     }
@@ -1911,11 +2253,51 @@ const zonesData = [
           feedback: "Correct! Proper door closer tension and three-point stair contact prevent finger crushes and ankle injuries."
         }
       ]
+    },
+    id: {
+      name: "5. Pintu Otomatis, Kedap Air & Tangga",
+      tag: "Zona 05 | Penahan Pintu (Door Closer), Blackout & Tangga",
+      stats: ["Terjepit (29.3%)", "Terpeleset (12.0%)", "Tanggap Blackout"],
+      cases: [
+        "[Jari Terjepit Pintu Kamar Mesin Saat Blackout] Saat kapal blackout total, Oiler berlari dalam gelap menuju kamar mesin dan menahan pintu otomatis (yang menutup cepat karena tekanan udara) dengan tangan kiri hingga jari telunjuknya terluka.",
+        "[Terjepit Pintu Kedap & Kamar Mandi] Bosun patah jari tengah saat membuka pintu kedap air ketika kapal oleng; Kadet terjepit ibu jari karena baut penahan pintu (door closer) kamar mandi dikendurkan.",
+        "[Salah Langkah di Tangga Kamar Mesin] Chief Engineer salah menginjak anak tangga saat turun ke kamar mesin hingga pergelangan kaki kanannya terkilir parah."
+      ],
+      rules: [
+        "DILARANG KERAS mengendurkan baut penahan pintu (door closer/buffer) pada pintu tahan api, pintu otomatis, maupun kamar mandi (diperiksa mingguan di MMP-FM20); kaitkan pengunci pintu saat dibuka.",
+        "Selalu pegang gagang pintu (door handle) saat membuka/menutup pintu; jangan pernah menaruh tangan di kusen pintu atau menahan pintu yang menutup dengan jari.",
+        "Saat terjadi Blackout (listrik padam), tunggu generator darurat menyala (dalam 45 detik) dan lampu darurat hidup sebelum bergerak terburu-buru; ikuti prosedur EWO-019.",
+        "Pegang handrail dengan kuat dan perhatikan setiap anak tangga kamar mesin/akomodasi; dilarang membawa barang >20 kg atau yang menghalangi pandangan sendirian di tangga."
+      ],
+      quizzes: [
+        {
+          code: "Z5-Q1",
+          q: "Q1. Saat terjadi Blackout (listrik padam total) dan jarak pandang gelap, bagaimana prinsip keselamatan pergerakan kru di kapal?",
+          options: [
+            "Berlari cepat dalam gelap menuju kamar mesin dan menahan tepi pintu otomatis dengan tangan",
+            "Tunggu generator darurat menyala (dalam 45 detik) hingga lampu darurat hidup, dan pegang gagang pintu—jangan pernah menahan tepi pintu dengan tangan",
+            "Berlari menuruni tangga kamar mesin dalam gelap tanpa memegang handrail"
+          ],
+          answer: 1,
+          feedback: "Benar! Tunggu maksimal 45 detik hingga penerangan darurat menyala dan jangan pernah menahan pintu otomatis dengan tangan."
+        },
+        {
+          code: "Z5-Q2",
+          q: "Q2. Aturan mana yang benar terkait penahan pintu (door closer) dan keselamatan saat naik/turun tangga kapal?",
+          options: [
+            "Kru boleh mengendurkan baut penahan pintu agar mudah keluar masuk dan membawa tumpukan barang yang menghalangi pandangan di tangga",
+            "Dilarang keras mengendurkan baut penahan pintu (diperiksa mingguan di MMP-FM20); pegang gagang pintu saja, dan pegang handrail di tangga tanpa membawa beban >20 kg sendirian",
+            "Handrail dan gagang pintu hanya wajib digunakan saat cuaca topan saja"
+          ],
+          answer: 1,
+          feedback: "Benar! Penahan pintu yang dikendurkan membuat pintu membanting keras saat kapal oleng, dan pegangan 3 titik di tangga mencegah jatuh."
+        }
+      ]
     }
   }
 ];
 
-// Shuffle option order for every question on page load (keeping zh/en indices synchronized)
+// Shuffle option order for every question on page load (keeping zh/en/id indices synchronized)
 zonesData.forEach(zone => {
   const qCount = zone.zh.quizzes.length;
   for (let i = 0; i < qCount; i++) {
@@ -1925,7 +2307,7 @@ zonesData.forEach(zone => {
       const k = Math.floor(Math.random() * (j + 1));
       [order[j], order[k]] = [order[k], order[j]];
     }
-    ['zh', 'en'].forEach(l => {
+    ['zh', 'en', 'id'].forEach(l => {
       const qObj = zone[l].quizzes[i];
       const oldAns = qObj.answer;
       qObj.options = order.map(idx => qObj.options[idx]);
@@ -1963,7 +2345,6 @@ function switchMainSection(sec) {
 function renderBriefingSection() {
   const b = briefingData[lang];
 
-  // Render Disaster Bars
   const barsContainer = document.getElementById('disaster-bars');
   barsContainer.innerHTML = b.stats.map(st => `
     <div class="stat-row">
@@ -1977,17 +2358,14 @@ function renderBriefingSection() {
     </div>
   `).join('');
 
-  // Render Basic Rules & 14 High-Risk Ops
   document.getElementById('basic-rules-list').innerHTML = b.basicRules.map(r => `<li>${r}</li>`).join('');
   document.getElementById('high-risk-tags').innerHTML = b.highRiskOps.map(op => `<span class="hr-tag">${op}</span>`).join('');
 
-  // Render Body Part Filters
   const filterBar = document.getElementById('body-filter-bar');
   filterBar.innerHTML = b.bodyParts.map(bp => `
     <button class="body-pill ${selectedBodyPart === bp.id ? 'active' : ''}" onclick="filterBodyPart('${bp.id}')">${bp.label}</button>
   `).join('');
 
-  // Render Filtered Head-to-Toe Cards
   const filteredCases = selectedBodyPart === 'all'
     ? b.cases
     : b.cases.filter(c => c.part === selectedBodyPart);
@@ -2060,18 +2438,34 @@ function selectZone(idx) {
   const panel = document.getElementById('detail-panel');
   const tabQuizLabel = lang === 'zh'
     ? `🎯 區域隨堂測驗 (${doneCount}/${totalCount} 題)`
-    : `🎯 Zone Quiz (${doneCount}/${totalCount})`;
-  const tabCaseLabel = lang === 'zh' ? '📖 該區案例與紅線' : '📖 Zone Cases & Rules';
+    : lang === 'en'
+      ? `🎯 Zone Quiz (${doneCount}/${totalCount})`
+      : `🎯 Kuis Zona (${doneCount}/${totalCount})`;
+  const tabCaseLabel = lang === 'zh'
+    ? '📖 該區案例與紅線'
+    : lang === 'en'
+      ? '📖 Zone Cases & Rules'
+      : '📖 Kasus & Aturan Zona';
 
   let statsHtml = z.stats.map(s => `<span class="stat-chip">${s}</span>`).join('');
 
   let tabContentHtml = '';
   if (activeTab === 'cases') {
-    const caseHeader = lang === 'zh' ? '⚠️ 船隊真實事故案例（警示還原）' : '⚠️ Fleet Accident Cases';
-    const ruleHeader = lang === 'zh' ? '🛡️ 強制安全注意事項與 SOP 改善對策' : '🛡️ Mandatory Safety Rules & Updated SOPs';
+    const caseHeader = lang === 'zh'
+      ? '⚠️ 船隊真實事故案例（警示還原）'
+      : lang === 'en'
+        ? '⚠️ Fleet Accident Cases'
+        : '⚠️ Kasus Kecelakaan Armada';
+    const ruleHeader = lang === 'zh'
+      ? '🛡️ 強制安全注意事項與 SOP 改善對策'
+      : lang === 'en'
+        ? '🛡️ Mandatory Safety Rules & Updated SOPs'
+        : '🛡️ Aturan Keselamatan Wajib & SOP Terbaru';
     const goQuizText = lang === 'zh'
       ? `前往本區隨堂測驗 (${doneCount}/${totalCount} 題) ➔`
-      : `Go to Zone Quiz (${doneCount}/${totalCount}) ➔`;
+      : lang === 'en'
+        ? `Go to Zone Quiz (${doneCount}/${totalCount}) ➔`
+        : `Lanjut ke Kuis Zona (${doneCount}/${totalCount}) ➔`;
 
     let casesHtml = z.cases.map(c => `<li>${c}</li>`).join('');
     let rulesHtml = z.rules.map(r => {
@@ -2079,8 +2473,8 @@ function selectZone(idx) {
         .replace(/80 公分|80 cm/g, '<span class="highlight-num">$&</span>')
         .replace(/200 公斤|200 kg/g, '<span class="highlight-num">$&</span>')
         .replace(/20 公斤|20 kg/g, '<span class="highlight-num">$&</span>')
-        .replace(/45 秒|45 seconds/g, '<span class="highlight-num">$&</span>')
-        .replace(/嚴禁配戴任何手套|STRICTLY PROHIBITED/g, '<span class="highlight-num">$&</span>')
+        .replace(/45 秒|45 seconds|45 detik/g, '<span class="highlight-num">$&</span>')
+        .replace(/嚴禁配戴任何手套|STRICTLY PROHIBITED|DILARANG KERAS/g, '<span class="highlight-num">$&</span>')
         .replace(/嚴禁私自調鬆|STRICTLY FORBIDDEN/g, '<span class="highlight-num">$&</span>')
         .replace(/18%～23%|18%–23%/g, '<span class="highlight-num">$&</span>');
       return `<li>${highlighted}</li>`;
@@ -2121,7 +2515,11 @@ function selectZone(idx) {
 
     let nextBtnHtml = '';
     if (isDone && idx < zonesData.length - 1) {
-      const nextLabel = lang === 'zh' ? '✅ 本區已通關！前往下一區測驗 ➔' : '✅ Zone Cleared! Next Zone Quiz ➔';
+      const nextLabel = lang === 'zh'
+        ? '✅ 本區已通關！前往下一區測驗 ➔'
+        : lang === 'en'
+          ? '✅ Zone Cleared! Next Zone Quiz ➔'
+          : '✅ Zona Selesai! Lanjut Kuis Zona Berikutnya ➔';
       nextBtnHtml = `
         <div class="next-zone-bar">
           <button class="btn-next" style="background:var(--success);" onclick="selectZone(${idx + 1});">${nextLabel}</button>
@@ -2135,11 +2533,14 @@ function selectZone(idx) {
     `;
   }
 
+  const badgeCleared = lang === 'zh' ? '✅ 本區已通關' : lang === 'en' ? '✅ Cleared' : '✅ Selesai';
+  const badgeSolved = lang === 'zh' ? `作答進度：${doneCount}/${totalCount}` : lang === 'en' ? `Solved: ${doneCount}/${totalCount}` : `Dijawab: ${doneCount}/${totalCount}`;
+
   panel.innerHTML = `
     <div class="detail-top">
       <span class="zone-tag">${z.tag}</span>
       <span class="zone-score-badge ${isDone ? 'passed' : ''}">
-        ${isDone ? (lang === 'zh' ? '✅ 本區已通關' : '✅ Cleared') : (lang === 'zh' ? `作答進度：${doneCount}/${totalCount}` : `Solved: ${doneCount}/${totalCount}`)}
+        ${isDone ? badgeCleared : badgeSolved}
       </span>
     </div>
     <h2 class="detail-title">${z.name}</h2>
@@ -2183,15 +2584,17 @@ function checkAnswer(zoneIdx, qIdx, optIdx, btnEl) {
     if (activeTabBtn && activeTab === 'quiz') {
       activeTabBtn.innerText = lang === 'zh'
         ? `🎯 區域隨堂測驗 (${doneCount}/${totalCount} 題)`
-        : `🎯 Zone Quiz (${doneCount}/${totalCount})`;
+        : lang === 'en'
+          ? `🎯 Zone Quiz (${doneCount}/${totalCount})`
+          : `🎯 Kuis Zona (${doneCount}/${totalCount})`;
     }
     const badge = document.querySelector('.zone-score-badge');
     if (badge) {
       if (doneCount === totalCount) {
         badge.classList.add('passed');
-        badge.innerText = lang === 'zh' ? '✅ 本區已通關' : '✅ Cleared';
+        badge.innerText = lang === 'zh' ? '✅ 本區已通關' : lang === 'en' ? '✅ Cleared' : '✅ Selesai';
       } else {
-        badge.innerText = lang === 'zh' ? `作答進度：${doneCount}/${totalCount}` : `Solved: ${doneCount}/${totalCount}`;
+        badge.innerText = lang === 'zh' ? `作答進度：${doneCount}/${totalCount}` : lang === 'en' ? `Solved: ${doneCount}/${totalCount}` : `Dijawab: ${doneCount}/${totalCount}`;
       }
     }
   } else {
@@ -2201,7 +2604,9 @@ function checkAnswer(zoneIdx, qIdx, optIdx, btnEl) {
     fb.style.color = '#7f1d1d';
     fb.innerText = lang === 'zh'
       ? '❌ 答案不正確，可切至「📖 該區案例與紅線」或「📚 船員宣導資料區」確認規範後再選一次！'
-      : '❌ Incorrect. Check Zone Cases & Rules or Briefing Materials and try again.';
+      : lang === 'en'
+        ? '❌ Incorrect. Check Zone Cases & Rules or Awareness Materials and try again.'
+        : '❌ Jawaban kurang tepat. Periksa tab "📖 Kasus & Aturan Zona" atau "📚 Materi Sosialisasi Kru" lalu coba lagi!';
 
     if (!solvedMatrix[zoneIdx][qIdx] && !wrongAttempts.includes(qz.code)) {
       wrongAttempts.push(qz.code);
@@ -2228,20 +2633,26 @@ function updateProgress() {
 
   progText.innerText = lang === 'zh'
     ? `測驗進度：${zonesDone} / 5 區（${qDone} / ${qTotal} 題）`
-    : `Quiz: ${zonesDone} / 5 Zones (${qDone} / ${qTotal} Qs)`;
+    : lang === 'en'
+      ? `Quiz: ${zonesDone} / 5 Zones (${qDone} / ${qTotal} Qs)`
+      : `Kuis: ${zonesDone} / 5 Zona (${qDone} / ${qTotal} Soal)`;
 
   if (qDone === qTotal) {
     dot.classList.add('done');
     btnCert.disabled = false;
     btnCert.innerText = lang === 'zh'
       ? `✅ 生成憑證並匯出至雲端試算表 (${qDone}/${qTotal} 題)`
-      : `✅ Generate Certificate & Sync to Cloud (${qDone}/${qTotal})`;
+      : lang === 'en'
+        ? `✅ Generate Certificate & Sync to Cloud (${qDone}/${qTotal})`
+        : `✅ Buat Sertifikat & Kirim ke Cloud (${qDone}/${qTotal} Soal)`;
     signCard.classList.add('unlocked');
   } else {
     btnCert.disabled = true;
     btnCert.innerText = lang === 'zh'
       ? `🔒 尚有題目未完成作答 (${qDone}/${qTotal} 題)`
-      : `🔒 Complete All Questions to Unlock (${qDone}/${qTotal})`;
+      : lang === 'en'
+        ? `🔒 Complete All Questions to Unlock (${qDone}/${qTotal})`
+        : `🔒 Selesaikan Semua Soal untuk Membuka (${qDone}/${qTotal})`;
   }
 }
 
@@ -2252,7 +2663,11 @@ async function submitAndExport() {
   const joinDate = document.getElementById('inp-date').value;
 
   if (!ship || !name || !joinDate) {
-    alert(lang === 'zh' ? '請完整填寫船名、船員姓名與上船日期！' : 'Please fill in Ship Name, Seafarer Name, and Date of Joining!');
+    alert(lang === 'zh'
+      ? '請選擇船名並完整填寫船員姓名與上船日期！'
+      : lang === 'en'
+        ? 'Please select Ship Name and fill in Seafarer Name and Date of Joining!'
+        : 'Harap pilih Nama Kapal serta lengkapi Nama Pelaut dan Tanggal Naik Kapal!');
     return;
   }
 
@@ -2273,20 +2688,21 @@ async function submitAndExport() {
   const certBox = document.getElementById('cert-box');
   certBox.style.display = 'block';
   certBox.innerHTML = `
-    <h3 style="color:var(--primary); margin-bottom:0.5rem;">🎓 台塑海運股份有限公司 (FPMC) — 船員安全宣導與測驗完成憑證</h3>
+    <h3 style="color:var(--primary); margin-bottom:0.5rem;">🎓 台塑海運股份有限公司 (FPMC) — 船員安全宣導與測驗完成憑證 / Safety Familiarization Certificate</h3>
     <p style="font-size:0.88rem; margin-bottom:0.6rem; color:#334155;">
-      依據 <strong>TDP-FM12-1</strong>《船員在船作業常見之災害類型危害告知單》及《從頭到腳職災案例彙編》訓練要求，本人已詳閱宣導資料並完成全船 5 大區域共 ${qTotal} 題測驗。
+      依據 <strong>TDP-FM12-1</strong>《船員在船作業常見之災害類型危害告知單》及《從頭到腳職災案例彙編》訓練要求，本人已詳閱宣導資料並完成全船 5 大區域共 ${qTotal} 題測驗。<br>
+      <em>(Saya telah membaca materi sosialisasi keselamatan TDP-FM12-1 & Kasus Cedera dan menyelesaikan seluruh ${qTotal} soal kuis keselamatan kapal.)</em>
     </p>
     <div style="background:#f8fafc; padding:0.85rem; border-radius:6px; font-size:0.9rem; line-height:1.8; border:1px solid #cbd5e1;">
-      <strong>船名 (Ship's Name)：</strong>${ship}<br>
-      <strong>職稱 (Rank)：</strong>${rank}<br>
-      <strong>船員姓名 (Seafarer's Name)：</strong>${name}<br>
-      <strong>上船日期 (Date of Joining)：</strong>${joinDate}<br>
-      <strong>測驗成績與弱點紀錄：</strong>${qTotal}/${qTotal} 題合格（首次誤答題號：${wrongSummary}）<br>
-      <strong>完成測驗與簽署時間：</strong>${now}
+      <strong>船名 (Ship's Name / Nama Kapal)：</strong>${ship}<br>
+      <strong>職稱 (Rank / Jabatan)：</strong>${rank}<br>
+      <strong>船員姓名 (Seafarer's Name / Nama Pelaut)：</strong>${name}<br>
+      <strong>上船日期 (Date of Joining / Tgl Naik Kapal)：</strong>${joinDate}<br>
+      <strong>測驗成績與弱點紀錄 (Score & Wrong Log)：</strong>${qTotal}/${qTotal} 題合格（首次誤答題號：${wrongSummary}）<br>
+      <strong>完成測驗與簽署時間 (Timestamp)：</strong>${now}
     </div>
     <p style="font-size:0.8rem; color:#16a34a; font-weight:700; margin-top:0.6rem;">
-      ※ 請截圖、列印或下載 Excel (.csv) 憑證交予船長／安全官存查，並列入船上安全訓練歸檔。
+      ※ 請截圖、列印或下載 Excel (.csv) 憑證交予船長／安全官存查 (Harap screenshot atau unduh CSV untuk diserahkan kepada Nakhoda / Safety Officer).
     </p>
   `;
 
@@ -2298,7 +2714,11 @@ async function submitAndExport() {
   statusEl.style.background = '#e0f2fe';
   statusEl.style.color = '#0369a1';
   statusEl.style.border = '1px solid #bae6fd';
-  statusEl.innerText = lang === 'zh' ? '⏳ 正在將測驗結果同步至岸端雲端試算表...' : '⏳ Syncing result to Cloud Excel...';
+  statusEl.innerText = lang === 'zh'
+    ? '⏳ 正在將測驗結果同步至岸端雲端試算表...'
+    : lang === 'en'
+      ? '⏳ Syncing result to Cloud Excel...'
+      : '⏳ Mengirim hasil kuis ke Google Sheet kantor darat...';
 
   try {
     await fetch(GAS_URL, {
@@ -2312,7 +2732,9 @@ async function submitAndExport() {
     statusEl.style.border = '1px solid #86efac';
     statusEl.innerText = lang === 'zh'
       ? '✅ 已成功匯出至岸端安全衛生處雲端試算表！(同時可下載 CSV 留存船端備份)'
-      : '✅ Successfully exported to Cloud Google Sheet! (You may also download a local CSV copy)';
+      : lang === 'en'
+        ? '✅ Successfully exported to Cloud Google Sheet! (You may also download a local CSV copy)'
+        : '✅ Berhasil terkirim ke Google Sheet Departemen HSSE! (Anda juga dapat mengunduh cadangan file CSV)';
   } catch (err) {
     saveToOfflineQueue(latestRecord);
     statusEl.style.background = '#fef2f2';
@@ -2320,7 +2742,9 @@ async function submitAndExport() {
     statusEl.style.border = '1px solid #fecaca';
     statusEl.innerText = lang === 'zh'
       ? '📡 偵測到船舶衛星網路離線或連線不穩：紀錄已自動存入本機離線佇列，請先下載 Excel (.csv) 或待網路恢復後點擊上方「補傳離線紀錄」。'
-      : '📡 Offline detected: Record queued locally for later sync. Download CSV now or retry when online.';
+      : lang === 'en'
+        ? '📡 Offline detected: Record queued locally for later sync. Download CSV now or retry when online.'
+        : '📡 Koneksi offline terdeteksi: Data disimpan sementara di perangkat. Unduh file CSV sekarang atau kirim ulang saat online.';
   }
 }
 
@@ -2337,7 +2761,9 @@ function downloadLatestCsv() {
     latestRecord.wrongLog
   ].map(val => `"${String(val).replace(/"/g, '""')}"`).join(',');
 
-  const csvContent = '\uFEFF' + headers.join(',') + '\n' + row + '\n';
+  const csvContent = '﻿' + headers.join(',') + '
+' + row + '
+';
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
 
@@ -2362,7 +2788,11 @@ function updateOfflineQueueBtn() {
   const btn = document.getElementById('btn-retry-queue');
   if (q.length > 0) {
     btn.style.display = 'inline-block';
-    btn.innerText = lang === 'zh' ? `🔄 補傳離線紀錄 (${q.length})` : `🔄 Sync Queued (${q.length})`;
+    btn.innerText = lang === 'zh'
+      ? `🔄 補傳離線紀錄 (${q.length})`
+      : lang === 'en'
+        ? `🔄 Sync Queued (${q.length})`
+        : `🔄 Kirim Antrean (${q.length})`;
   } else {
     btn.style.display = 'none';
   }
@@ -2383,89 +2813,121 @@ async function retryOfflineQueue() {
     }
     localStorage.removeItem('FPMC_OFFLINE_QUEUE');
     updateOfflineQueueBtn();
-    alert(lang === 'zh' ? `✅ 已成功補傳 ${q.length} 筆紀錄至雲端試算表！` : `✅ Successfully synced ${q.length} queued record(s)!`);
+    alert(lang === 'zh'
+      ? `✅ 已成功補傳 ${q.length} 筆紀錄至雲端試算表！`
+      : lang === 'en'
+        ? `✅ Successfully synced ${q.length} queued record(s)!`
+        : `✅ Berhasil mengirim ulang ${q.length} data ke Google Sheet!`);
   } catch (err) {
-    alert(lang === 'zh' ? '❌ 目前仍無法連線至雲端，請確認網路狀態後再試。' : '❌ Still offline. Please check connection and try again.');
+    alert(lang === 'zh'
+      ? '❌ 目前仍無法連線至雲端，請確認網路狀態後再試。'
+      : lang === 'en'
+        ? '❌ Still offline. Please check connection and try again.'
+        : '❌ Masih offline. Periksa koneksi internet dan coba lagi.');
   }
 }
 
-function toggleLang() {
-  lang = lang === 'zh' ? 'en' : 'zh';
-  document.getElementById('btn-lang').innerText = lang === 'zh' ? 'English' : '繁體中文';
+function setLang(newLang) {
+  lang = newLang;
 
-  document.getElementById('ui-title').innerText = lang === 'zh'
-    ? '台塑海運安全宣導與船舶危害探索測驗平台'
-    : 'FPMC Crew Safety Awareness & Shipboard Hazard Quiz';
-  document.getElementById('ui-subtitle').innerText = lang === 'zh'
-    ? '安全衛生處 | TDP-FM12-1 危害告知單 & 「從頭到腳」職災案例整合學習'
-    : 'HSSE Dept. | TDP-FM12-1 Hazard Notification & Head-to-Toe Injury Cases';
-  document.getElementById('nav-briefing').innerText = lang === 'zh' ? '📚 船員宣導資料區' : '📚 Awareness Materials';
-  document.getElementById('nav-quiz').innerText = lang === 'zh' ? '🚢 船舶探索與測驗區' : '🚢 Ship Map & Quiz';
+  // Update active button state
+  ['zh', 'en', 'id'].forEach(l => {
+    const btn = document.getElementById(`btn-lang-${l}`);
+    if (btn) {
+      if (l === lang) btn.classList.add('active');
+      else btn.classList.remove('active');
+    }
+  });
 
-  document.getElementById('ui-intro').innerHTML = lang === 'zh'
-    ? '請先於<strong>「📚 船員宣導資料區」</strong>熟讀歷年災害統計與「從頭到腳」職災案例，再進入<strong>「🚢 船舶探索與測驗區」</strong>點擊全船 5 大熱點完成 10 題隨堂測驗與雲端簽署。'
-    : 'Review historical statistics and Head-to-Toe cases in <strong>"📚 Awareness Materials"</strong>, then complete all 10 quiz questions across the 5 vessel hotspots in <strong>"🚢 Ship Map & Quiz"</strong>.';
-  document.getElementById('ui-swa').innerText = lang === 'zh'
-    ? '🛑 停止工作授權 (SWA / RAP-7.6)：察覺不安全狀況或行為時，您有責任與義務立即停止作業！'
-    : '🛑 Stop Work Authority (SWA / RAP-7.6): You have the responsibility & obligation to stop unsafe work immediately!';
+  if (lang === 'zh') {
+    document.getElementById('ui-title').innerText = '台塑海運安全宣導與船舶危害探索測驗平台';
+    document.getElementById('ui-subtitle').innerText = '安全衛生處 | TDP-FM12-1 危害告知單 & 「從頭到腳」職災案例整合學習';
+    document.getElementById('nav-briefing').innerText = '📚 船員宣導資料區';
+    document.getElementById('nav-quiz').innerText = '🚢 船舶探索與測驗區';
+    document.getElementById('ui-intro').innerHTML = '請先於<strong>「📚 船員宣導資料區」</strong>熟讀歷年災害統計與「從頭到腳」職災案例，再進入<strong>「🚢 船舶探索與測驗區」</strong>點擊全船 5 大熱點完成 10 題隨堂測驗與雲端簽署。';
+    document.getElementById('ui-swa').innerText = '🛑 停止工作授權 (SWA / RAP-7.6)：察覺不安全狀況或行為時，您有責任與義務立即停止作業！';
 
-  // Briefing strings
-  document.getElementById('b-stat-title').innerText = lang === 'zh'
-    ? '📊 歷年船員在船作業災害類型統計（TDP-FM12-1 告知單）'
-    : '📊 Historical Shipboard Disaster Statistics (TDP-FM12-1)';
-  document.getElementById('b-stat-desc').innerHTML = lang === 'zh'
-    ? '依據台塑海運 2011 年迄今受傷案件統計，<strong>「被夾捲壓」與「被撞」合計佔比高達 48.0%</strong>，為全船首要防範重點：'
-    : 'Based on FPMC injury data since 2011, <strong>"Caught/Crushed" and "Struck By" account for 48.0%</strong> of all cases:';
-  document.getElementById('b-rule-title').innerText = lang === 'zh'
-    ? '🛡️ 一、基本安全事項與 14 項高風險作業管制'
-    : '🛡️ Basic Safety Rules & 14 High-Risk Operations';
-  document.getElementById('b-hr-subtitle').innerText = lang === 'zh'
-    ? '⚠️ 大副／大管作業前必須親自檢查 PPE 之 14 項高風險作業：'
-    : '⚠️ 14 High-Risk Operations Requiring Pre-Work PPE Check by C/O or 2/E:';
-  document.getElementById('b-h2t-title').innerText = lang === 'zh'
-    ? '🩺 「從頭到腳」真實職災案例與 SOP 改善對策宣導（依受傷部位檢視）'
-    : '🩺 "Head-to-Toe" Fleet Injury Cases & SOP Countermeasures';
-  document.getElementById('b-h2t-desc').innerText = lang === 'zh'
-    ? '點擊下方身體部位篩選器，檢視船隊真實發生之受傷經過與公司修訂後之保命規定：'
-    : 'Filter by body part below to review actual fleet incidents and updated safety rules:';
-  document.getElementById('b-pdf-title').innerText = lang === 'zh'
-    ? '📎 宣導文件原始檔下載（若已上傳至同層目錄可直接開啟）：'
-    : '📎 Original Briefing PDFs (Available when uploaded to the same folder):';
-  document.getElementById('link-pdf-1').innerText = lang === 'zh'
-    ? '📄 船舶作業常見災害類型告知單 (TDP-FM12-1)'
-    : '📄 Common Disasters Notification Sheet (TDP-FM12-1)';
-  document.getElementById('link-pdf-2').innerText = lang === 'zh'
-    ? '📘 從頭到腳職災案例彙編 (PDF)'
-    : '📘 Head-to-Toe Injury Cases Compilation (PDF)';
-  document.getElementById('btn-go-quiz-main').innerText = lang === 'zh'
-    ? '✅ 宣導資料已詳閱，前往「船舶探索與測驗區」 ➔'
-    : '✅ Materials Reviewed — Proceed to Ship Map & Quiz ➔';
+    document.getElementById('b-stat-title').innerText = '📊 歷年船員在船作業災害類型統計（TDP-FM12-1 告知單）';
+    document.getElementById('b-stat-desc').innerHTML = '依據台塑海運 2011 年迄今受傷案件統計，<strong>「被夾捲壓」與「被撞」合計佔比高達 48.0%</strong>，為全船首要防範重點：';
+    document.getElementById('b-rule-title').innerText = '🛡️ 一、基本安全事項與 14 項高風險作業管制';
+    document.getElementById('b-hr-subtitle').innerText = '⚠️ 大副／大管作業前必須親自檢查 PPE 之 14 項高風險作業：';
+    document.getElementById('b-h2t-title').innerText = '🩺 「從頭到腳」真實職災案例與 SOP 改善對策宣導（依受傷部位檢視）';
+    document.getElementById('b-h2t-desc').innerText = '點擊下方身體部位篩選器，檢視船隊真實發生之受傷經過與公司修訂後之保命規定：';
+    document.getElementById('b-pdf-title').innerText = '📎 宣導文件原始檔下載（若已上傳至同層目錄可直接開啟）：';
+    document.getElementById('link-pdf-1').innerText = '📄 船舶作業常見災害類型告知單 (TDP-FM12-1)';
+    document.getElementById('link-pdf-2').innerText = '📘 從頭到腳職災案例彙編 (PDF)';
+    document.getElementById('btn-go-quiz-main').innerText = '✅ 宣導資料已詳閱，前往「船舶探索與測驗區」 ➔';
 
-  // Quiz strings
-  document.getElementById('ui-map-title').innerText = lang === 'zh'
-    ? '🚢 全船作業危害熱點地圖（點擊標記或下方按鈕切換區域）'
-    : '🚢 Vessel Hazard Hotspot Map (Click Pins or Buttons Below)';
-  document.getElementById('ui-leg-todo').innerText = lang === 'zh' ? '未完成題庫' : 'In Progress';
-  document.getElementById('ui-leg-done').innerText = lang === 'zh' ? '已全數答對' : 'All Cleared';
-  document.getElementById('ui-kpi-title').innerText = lang === 'zh'
-    ? '📌 全船保命紅線與修訂 SOP 數據速查'
-    : '📌 Fleet-Wide Golden Safety Numbers & Updated SOPs';
-  document.getElementById('ui-kpi-1').innerHTML = lang === 'zh'
-    ? '單人搬運上限 20kg<br>艙口圍 80cm 淨空限制區'
-    : 'Max Manual Lift 20kg<br>80cm Hatch Clear Area';
-  document.getElementById('ui-kpi-2').innerHTML = lang === 'zh'
-    ? '鑽床/車床/砂輪嚴禁手套<br>無護籠爬梯背負式雙掛勾'
-    : 'No Gloves on Drills/Lathes<br>Double-Lanyard Harness on Ladders';
-  document.getElementById('ui-kpi-3').innerHTML = lang === 'zh'
-    ? '密閉空間 LEL&lt;30%<br>全船失電待45秒照明恢復'
-    : 'Enclosed Space LEL&lt;30%<br>Wait 45s for Blackout Lighting';
-  document.getElementById('ui-sign-title').innerText = lang === 'zh'
-    ? '📋 TDP-FM12-1 危害告知與案例訓練確認簽署（自動同步雲端試算表）'
-    : '📋 TDP-FM12-1 Hazard & Case Training Sign-Off (Auto-Sync to Cloud)';
-  document.getElementById('ui-sign-desc').innerText = lang === 'zh'
-    ? '完成上方全部 5 個船舶區域（共 10 題）後，填寫個人資料即可生成數位確認憑證並自動匯出至岸端雲端試算表。'
-    : 'Complete all 5 vessel zones (10 questions) above to generate your certificate and sync results to Google Sheets.';
-  document.getElementById('btn-download-csv').innerText = lang === 'zh' ? '📥 下載 Excel (.csv) 紀錄檔' : '📥 Download Excel (.csv)';
+    document.getElementById('ui-map-title').innerText = '🚢 全船作業危害熱點地圖（點擊標記或下方按鈕切換區域）';
+    document.getElementById('ui-leg-todo').innerText = '未完成題庫';
+    document.getElementById('ui-leg-done').innerText = '已全數答對';
+    document.getElementById('ui-kpi-title').innerText = '📌 全船保命紅線與修訂 SOP 數據速查';
+    document.getElementById('ui-kpi-1').innerHTML = '單人搬運上限 20kg<br>艙口圍 80cm 淨空限制區';
+    document.getElementById('ui-kpi-2').innerHTML = '鑽床/車床/砂輪嚴禁手套<br>無護籠爬梯背負式雙掛勾';
+    document.getElementById('ui-kpi-3').innerHTML = '密閉空間 LEL&lt;30%<br>全船失電待45秒照明恢復';
+    document.getElementById('ui-sign-title').innerText = '📋 TDP-FM12-1 危害告知與案例訓練確認簽署（自動同步雲端試算表）';
+    document.getElementById('ui-sign-desc').innerText = '完成上方全部 5 個船舶區域（共 10 題）後，填寫個人資料即可生成數位確認憑證並自動匯出至岸端雲端試算表。';
+    document.getElementById('btn-download-csv').innerText = '📥 下載 Excel (.csv) 紀錄檔';
+  } else if (lang === 'en') {
+    document.getElementById('ui-title').innerText = 'FPMC Crew Safety Awareness & Shipboard Hazard Quiz';
+    document.getElementById('ui-subtitle').innerText = 'HSSE Dept. | TDP-FM12-1 Hazard Notification & Head-to-Toe Injury Cases';
+    document.getElementById('nav-briefing').innerText = '📚 Awareness Materials';
+    document.getElementById('nav-quiz').innerText = '🚢 Ship Map & Quiz';
+    document.getElementById('ui-intro').innerHTML = 'Review historical statistics and Head-to-Toe cases in <strong>"📚 Awareness Materials"</strong>, then complete all 10 quiz questions across the 5 vessel hotspots in <strong>"🚢 Ship Map & Quiz"</strong>.';
+    document.getElementById('ui-swa').innerText = '🛑 Stop Work Authority (SWA / RAP-7.6): You have the responsibility & obligation to stop unsafe work immediately!';
+
+    document.getElementById('b-stat-title').innerText = '📊 Historical Shipboard Disaster Statistics (TDP-FM12-1)';
+    document.getElementById('b-stat-desc').innerHTML = 'Based on FPMC injury data since 2011, <strong>"Caught/Crushed" and "Struck By" account for 48.0%</strong> of all cases:';
+    document.getElementById('b-rule-title').innerText = '🛡️ Basic Safety Rules & 14 High-Risk Operations';
+    document.getElementById('b-hr-subtitle').innerText = '⚠️ 14 High-Risk Operations Requiring Pre-Work PPE Check by C/O or 2/E:';
+    document.getElementById('b-h2t-title').innerText = '🩺 "Head-to-Toe" Fleet Injury Cases & SOP Countermeasures';
+    document.getElementById('b-h2t-desc').innerText = 'Filter by body part below to review actual fleet incidents and updated safety rules:';
+    document.getElementById('b-pdf-title').innerText = '📎 Original Briefing PDFs (Available when uploaded to the same folder):';
+    document.getElementById('link-pdf-1').innerText = '📄 Common Disasters Notification Sheet (TDP-FM12-1)';
+    document.getElementById('link-pdf-2').innerText = '📘 Head-to-Toe Injury Cases Compilation (PDF)';
+    document.getElementById('btn-go-quiz-main').innerText = '✅ Materials Reviewed — Proceed to Ship Map & Quiz ➔';
+
+    document.getElementById('ui-map-title').innerText = '🚢 Vessel Hazard Hotspot Map (Click Pins or Buttons Below)';
+    document.getElementById('ui-leg-todo').innerText = 'In Progress';
+    document.getElementById('ui-leg-done').innerText = 'All Cleared';
+    document.getElementById('ui-kpi-title').innerText = '📌 Fleet-Wide Golden Safety Numbers & Updated SOPs';
+    document.getElementById('ui-kpi-1').innerHTML = 'Max Manual Lift 20kg<br>80cm Hatch Clear Area';
+    document.getElementById('ui-kpi-2').innerHTML = 'No Gloves on Drills/Lathes<br>Double-Lanyard Harness on Ladders';
+    document.getElementById('ui-kpi-3').innerHTML = 'Enclosed Space LEL&lt;30%<br>Wait 45s for Blackout Lighting';
+    document.getElementById('ui-sign-title').innerText = '📋 TDP-FM12-1 Hazard & Case Training Sign-Off (Auto-Sync to Cloud)';
+    document.getElementById('ui-sign-desc').innerText = 'Complete all 5 vessel zones (10 questions) above to generate your certificate and sync results to Google Sheets.';
+    document.getElementById('btn-download-csv').innerText = '📥 Download Excel (.csv)';
+  } else {
+    // Bahasa Indonesia (id)
+    document.getElementById('ui-title').innerText = 'Platform Sosialisasi Keselamatan & Kuis Bahaya Kapal FPMC';
+    document.getElementById('ui-subtitle').innerText = 'Departemen HSSE | Pemberitahuan Bahaya TDP-FM12-1 & Kasus Cedera "Head-to-Toe"';
+    document.getElementById('nav-briefing').innerText = '📚 Materi Sosialisasi Kru';
+    document.getElementById('nav-quiz').innerText = '🚢 Peta Kapal & Kuis';
+    document.getElementById('ui-intro').innerHTML = 'Pelajari statistik kecelakaan dan kasus cedera "Head-to-Toe" di <strong>"📚 Materi Sosialisasi Kru"</strong>, lalu klik 5 titik area di <strong>"🚢 Peta Kapal & Kuis"</strong> untuk menyelesaikan 10 soal kuis dan tanda tangan digital.';
+    document.getElementById('ui-swa').innerText = '🛑 Stop Work Authority (SWA / RAP-7.6): Anda memiliki tanggung jawab & kewajiban untuk segera menghentikan pekerjaan yang tidak aman!';
+
+    document.getElementById('b-stat-title').innerText = '📊 Statistik Jenis Kecelakaan Kerja di Kapal (TDP-FM12-1)';
+    document.getElementById('b-stat-desc').innerHTML = 'Berdasarkan data cedera armada FPMC sejak 2011, <strong>"Terjepit/Tergencet" dan "Terbentur" mencapai 48,0%</strong> dari total kasus:';
+    document.getElementById('b-rule-title').innerText = '🛡️ Aturan Dasar Keselamatan & 14 Pekerjaan Berisiko Tinggi';
+    document.getElementById('b-hr-subtitle').innerText = '⚠️ 14 Pekerjaan Berisiko Tinggi yang Wajib Diperiksa APD-nya oleh C/O atau 2/E:';
+    document.getElementById('b-h2t-title').innerText = '🩺 Kasus Kecelakaan Nyata "Head-to-Toe" & Revisi SOP Keselamatan';
+    document.getElementById('b-h2t-desc').innerText = 'Pilih filter bagian tubuh di bawah untuk melihat kronologi kecelakaan dan aturan pencegahan terbaru:';
+    document.getElementById('b-pdf-title').innerText = '📎 Unduh Dokumen Asli PDF (Tersedia jika diunggah di folder yang sama):';
+    document.getElementById('link-pdf-1').innerText = '📄 Lembar Pemberitahuan Bahaya Umum Kapal (TDP-FM12-1)';
+    document.getElementById('link-pdf-2').innerText = '📘 Kompilasi Kasus Kecelakaan Head-to-Toe (PDF)';
+    document.getElementById('btn-go-quiz-main').innerText = '✅ Materi Selesai Dibaca — Lanjut ke "Peta Kapal & Kuis" ➔';
+
+    document.getElementById('ui-map-title').innerText = '🚢 Peta Titik Rawan Bahaya Kapal (Klik Nomor atau Tombol Area)';
+    document.getElementById('ui-leg-todo').innerText = 'Belum Selesai';
+    document.getElementById('ui-leg-done').innerText = 'Semua Benar';
+    document.getElementById('ui-kpi-title').innerText = '📌 Angka Batas Wajib & Revisi SOP Keselamatan Armada';
+    document.getElementById('ui-kpi-1').innerHTML = 'Batas Angkat Manual 20kg<br>Area Bebas Palka 80cm';
+    document.getElementById('ui-kpi-2').innerHTML = 'Dilarang Sarung Tangan di Bor<br>Double-Lanyard di Tangga Palka';
+    document.getElementById('ui-kpi-3').innerHTML = 'Ruang Tertutup LEL&lt;30%<br>Tunggu 45 dtk Lampu Blackout';
+    document.getElementById('ui-sign-title').innerText = '📋 Konfirmasi Pemahaman Bahaya TDP-FM12-1 & Ekspor Cloud';
+    document.getElementById('ui-sign-desc').innerText = 'Setelah menyelesaikan ke-5 area kapal (10 soal) di atas, isi data diri untuk membuat sertifikat digital dan mengirim ke Google Sheet.';
+    document.getElementById('btn-download-csv').innerText = '📥 Unduh File Excel (.csv)';
+  }
 
   updateOfflineQueueBtn();
   updateProgress();
