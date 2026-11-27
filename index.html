@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>台塑海運 FPMC | 船舶作業常見災害類型互動探索島 (TDP-FM12 / 2022-MD-035)</title>
+<title>台塑海運 FPMC | 船舶安全宣導與危害探索測驗平台 (TDP-FM12-1 & 從頭到腳案例)</title>
 <style>
   :root {
     --primary: #0b2545;
@@ -35,11 +35,11 @@
     line-height: 1.6;
   }
 
-  /* Header */
+  /* Top Navigation Bar */
   header {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
-    padding: 0.9rem 1.5rem;
+    padding: 0.85rem 1.5rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -65,37 +65,62 @@
     border-radius: 6px;
     font-size: 0.92rem;
     letter-spacing: 0.8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
 
   .brand h1 {
-    font-size: 1.15rem;
+    font-size: 1.12rem;
     font-weight: 700;
-    letter-spacing: 0.3px;
   }
 
   .brand p {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: #cbd5e1;
   }
 
-  .controls {
+  .nav-controls {
     display: flex;
     align-items: center;
-    gap: 0.65rem;
+    gap: 0.6rem;
     flex-wrap: wrap;
+  }
+
+  /* Primary Mode Switcher */
+  .mode-switch {
+    display: flex;
+    background: rgba(255,255,255,0.12);
+    padding: 0.25rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .mode-btn {
+    background: transparent;
+    color: #e2e8f0;
+    border: none;
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .mode-btn.active {
+    background: #38bdf8;
+    color: #0b2545;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
 
   .progress-pill {
     background: rgba(255,255,255,0.14);
     border: 1px solid rgba(255,255,255,0.2);
-    padding: 0.4rem 0.95rem;
+    padding: 0.4rem 0.9rem;
     border-radius: 999px;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
   }
 
   .progress-dot {
@@ -103,7 +128,6 @@
     height: 10px;
     border-radius: 50%;
     background: #fbbf24;
-    transition: background 0.3s;
   }
 
   .progress-dot.done {
@@ -115,7 +139,7 @@
     background: #f59e0b;
     color: #0b2545;
     border: none;
-    padding: 0.42rem 0.85rem;
+    padding: 0.42rem 0.8rem;
     border-radius: 6px;
     font-weight: 800;
     font-size: 0.82rem;
@@ -127,31 +151,29 @@
     background: white;
     color: var(--primary);
     border: none;
-    padding: 0.45rem 0.95rem;
+    padding: 0.45rem 0.9rem;
     border-radius: 6px;
     font-weight: 700;
     font-size: 0.85rem;
     cursor: pointer;
-    transition: all 0.2s;
   }
 
   .btn-lang:hover {
     background: #e0f2fe;
-    transform: translateY(-1px);
   }
 
   /* Main Container */
   .container {
-    max-width: 1340px;
+    max-width: 1360px;
     margin: 0 auto;
     padding: 1.25rem 1.5rem 2.5rem;
   }
 
-  /* Intro & SWA Banner */
+  /* SWA Banner */
   .intro-bar {
     background: var(--card);
     border-left: 5px solid var(--accent);
-    padding: 0.95rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     border-radius: 8px;
     margin-bottom: 1.25rem;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
@@ -163,7 +185,7 @@
   }
 
   .intro-bar p {
-    font-size: 0.93rem;
+    font-size: 0.92rem;
     color: var(--text);
   }
 
@@ -171,13 +193,249 @@
     background: var(--danger-bg);
     color: var(--danger);
     border: 1px solid #fecaca;
-    padding: 0.45rem 0.85rem;
+    padding: 0.42rem 0.85rem;
     border-radius: 6px;
     font-size: 0.82rem;
     font-weight: 700;
   }
 
-  /* Layout Grid */
+  /* ================= SECTION 1: BRIEFING & AWARENESS MATERIALS ================= */
+  .briefing-section {
+    display: none;
+  }
+
+  .briefing-section.active {
+    display: block;
+  }
+
+  .briefing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.35rem;
+    margin-bottom: 1.35rem;
+  }
+
+  @media (max-width: 960px) {
+    .briefing-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .b-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.35rem;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .b-card h2 {
+    font-size: 1.08rem;
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Disaster Proportion Bars */
+  .stat-row {
+    margin-bottom: 0.65rem;
+  }
+
+  .stat-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.84rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+  }
+
+  .bar-bg {
+    background: #e2e8f0;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #0284c7, #0b2545);
+  }
+
+  .bar-fill.top {
+    background: linear-gradient(90deg, #ef4444, #b91c1c);
+  }
+
+  /* High Risk Operations Tag Cloud */
+  .high-risk-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0.65rem 0 1rem;
+  }
+
+  .hr-tag {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+  }
+
+  .basic-rules-list {
+    padding-left: 1.25rem;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+
+  .basic-rules-list li {
+    margin-bottom: 0.55rem;
+  }
+
+  /* Head-to-Toe Body Part Filter & Cards */
+  .body-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .body-pill {
+    background: #f8fafc;
+    border: 1.5px solid var(--border);
+    padding: 0.42rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.84rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text);
+    transition: all 0.15s;
+  }
+
+  .body-pill:hover {
+    border-color: var(--accent);
+    background: #f0f9ff;
+  }
+
+  .body-pill.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  .h2t-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  .h2t-item {
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-left: 4px solid var(--danger);
+    border-radius: 8px;
+    padding: 0.95rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .h2t-part-badge {
+    display: inline-block;
+    background: #fee2e2;
+    color: #991b1b;
+    font-size: 0.75rem;
+    font-weight: 800;
+    padding: 0.18rem 0.55rem;
+    border-radius: 4px;
+    margin-bottom: 0.4rem;
+  }
+
+  .h2t-item h4 {
+    font-size: 0.95rem;
+    color: var(--primary);
+    margin-bottom: 0.4rem;
+  }
+
+  .h2t-item p {
+    font-size: 0.84rem;
+    color: #334155;
+    margin-bottom: 0.55rem;
+  }
+
+  .h2t-fix {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #14532d;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.45rem 0.65rem;
+    border-radius: 6px;
+  }
+
+  /* PDF Download Bar */
+  .pdf-download-bar {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 1.5px solid #7dd3fc;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .pdf-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .btn-pdf {
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    padding: 0.55rem 1rem;
+    border-radius: 7px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .btn-pdf:hover {
+    background: var(--accent);
+  }
+
+  .btn-start-quiz-cta {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 0.65rem 1.3rem;
+    border-radius: 8px;
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  /* ================= SECTION 2: SHIP MAP & QUIZ ZONE ================= */
+  .quiz-section {
+    display: none;
+  }
+
+  .quiz-section.active {
+    display: block;
+  }
+
   .workspace {
     display: grid;
     grid-template-columns: 1.08fr 0.92fr;
@@ -191,7 +449,6 @@
     }
   }
 
-  /* Left Column: Map + Quick Reference Cards */
   .left-col {
     display: flex;
     flex-direction: column;
@@ -333,7 +590,7 @@
     border-color: var(--success);
   }
 
-  /* Red-Line Golden Rules Card (Left Bottom) */
+  /* Red-Line Golden Rules Card */
   .golden-rules-card {
     background: var(--card);
     border-radius: 12px;
@@ -346,9 +603,6 @@
     font-size: 0.96rem;
     color: var(--primary);
     margin-bottom: 0.75rem;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
   }
 
   .kpi-grid {
@@ -372,7 +626,7 @@
   }
 
   .kpi-val {
-    font-size: 1.12rem;
+    font-size: 1.08rem;
     font-weight: 900;
     color: var(--danger);
     display: block;
@@ -427,7 +681,7 @@
   }
 
   .detail-title {
-    font-size: 1.32rem;
+    font-size: 1.3rem;
     color: var(--primary);
     margin-bottom: 0.5rem;
   }
@@ -467,7 +721,6 @@
     cursor: pointer;
     border-bottom: 3px solid transparent;
     margin-bottom: -2px;
-    transition: all 0.15s;
   }
 
   .tab-btn.active {
@@ -607,10 +860,6 @@
     cursor: pointer;
   }
 
-  .btn-next:hover {
-    background: #0369a1;
-  }
-
   /* Sign-off & Cloud Export Section */
   .signoff-card {
     background: var(--card);
@@ -624,14 +873,6 @@
   .signoff-card.unlocked {
     border-color: var(--success);
     background: linear-gradient(to right, #ffffff, #f0fdf4);
-  }
-
-  .signoff-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.75rem;
   }
 
   .form-grid {
@@ -692,10 +933,6 @@
     display: none;
   }
 
-  .btn-csv:hover {
-    background: #115e59;
-  }
-
   .sync-status {
     margin-top: 0.85rem;
     padding: 0.65rem 0.9rem;
@@ -731,15 +968,19 @@
   <div class="brand">
     <span class="brand-badge">FPMC SAFETY</span>
     <div>
-      <h1 id="ui-title">船舶作業常見災害類型互動探索島 (TDP-FM12 / 異常案例彙編)</h1>
-      <p id="ui-subtitle">台塑海運安全衛生處 | 整合海事通告 2022-MD-035 與歷年「從頭到腳」職災案例訓練平台</p>
+      <h1 id="ui-title">台塑海運安全宣導與船舶危害探索測驗平台</h1>
+      <p id="ui-subtitle">安全衛生處 | TDP-FM12-1 危害告知單 &amp; 「從頭到腳」職災案例整合學習</p>
     </div>
   </div>
-  <div class="controls">
-    <button class="btn-queue" id="btn-retry-queue" onclick="retryOfflineQueue()">🔄 補傳離線暫存紀錄 (0)</button>
+  <div class="nav-controls">
+    <div class="mode-switch">
+      <button class="mode-btn" id="nav-briefing" onclick="switchMainSection('briefing')">📚 船員宣導資料區</button>
+      <button class="mode-btn active" id="nav-quiz" onclick="switchMainSection('quiz')">🚢 船舶探索與測驗區</button>
+    </div>
+    <button class="btn-queue" id="btn-retry-queue" onclick="retryOfflineQueue()">🔄 補傳離線紀錄 (0)</button>
     <div class="progress-pill">
       <span class="progress-dot" id="progress-dot"></span>
-      <span id="ui-progress">通關進度：0 / 5 區域（0 / 10 題）</span>
+      <span id="ui-progress">測驗進度：0 / 5 區（0 / 10 題）</span>
     </div>
     <button class="btn-lang" onclick="toggleLang()" id="btn-lang">English</button>
   </div>
@@ -747,202 +988,251 @@
 
 <div class="container">
   <div class="intro-bar">
-    <p id="ui-intro">請點擊船舶地圖上的<strong> 5 個作業熱點</strong>，詳閱最新增補職災與重要設備異常案例，並完成各區精選隨堂題庫（共 10 題）以解鎖開航前熟悉確認憑證與雲端匯出。</p>
-    <span class="swa-badge" id="ui-swa">🛑 停止工作授權 (SWA / RAP-7.6)：察覺不安全狀況時，您有責任與義務立即停止作業！</span>
+    <p id="ui-intro">請先於<strong>「📚 船員宣導資料區」</strong>熟讀歷年災害統計與「從頭到腳」職災案例，再進入<strong>「🚢 船舶探索與測驗區」</strong>點擊全船 5 大熱點完成 10 題隨堂測驗與雲端簽署。</p>
+    <span class="swa-badge" id="ui-swa">🛑 停止工作授權 (SWA / RAP-7.6)：察覺不安全狀況或行為時，您有責任與義務立即停止作業！</span>
   </div>
 
-  <div class="workspace">
-    <!-- Left Column -->
-    <div class="left-col">
-      <div class="map-card">
-        <div class="map-header">
-          <h2 id="ui-map-title">🚢 全船作業危害熱點地圖（點擊標記切換區域）</h2>
-          <div class="legend">
-            <span><i class="dot-red"></i> <span id="ui-leg-todo">未完成題庫</span></span>
-            <span><i class="dot-green"></i> <span id="ui-leg-done">已全數答對</span></span>
-          </div>
-        </div>
-
-        <div class="ship-viewport">
-          <svg class="ship-svg" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
-            <!-- Clouds -->
-            <circle cx="120" cy="52" r="16" fill="rgba(255,255,255,0.65)"/>
-            <circle cx="140" cy="48" r="22" fill="rgba(255,255,255,0.65)"/>
-            <circle cx="162" cy="53" r="15" fill="rgba(255,255,255,0.65)"/>
-            <circle cx="590" cy="42" r="14" fill="rgba(255,255,255,0.55)"/>
-            <circle cx="608" cy="39" r="19" fill="rgba(255,255,255,0.55)"/>
-
-            <!-- Funnel -->
-            <polygon points="155,140 170,90 205,90 215,140" fill="#1e293b"/>
-            <rect x="167" y="101" width="40" height="10" fill="#dc2626"/>
-            <text x="173" y="109" fill="white" font-size="7" font-weight="bold">FPMC</text>
-
-            <!-- Superstructure -->
-            <rect x="120" y="140" width="115" height="75" rx="3" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
-            <rect x="132" y="120" width="85" height="20" rx="2" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
-            <rect x="125" y="108" width="102" height="12" rx="2" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/>
-            <rect x="135" y="111" width="82" height="5" fill="#0284c7"/>
-            <line x1="175" y1="108" x2="175" y2="78" stroke="#334155" stroke-width="3"/>
-            <line x1="160" y1="86" x2="190" y2="86" stroke="#334155" stroke-width="2.5"/>
-
-            <!-- Windows -->
-            <rect x="135" y="150" width="14" height="10" fill="#38bdf8"/>
-            <rect x="160" y="150" width="14" height="10" fill="#38bdf8"/>
-            <rect x="185" y="150" width="14" height="10" fill="#38bdf8"/>
-            <rect x="135" y="173" width="14" height="10" fill="#38bdf8"/>
-            <rect x="160" y="173" width="14" height="10" fill="#38bdf8"/>
-            <rect x="185" y="173" width="14" height="10" fill="#38bdf8"/>
-
-            <!-- Cargo Holds / Hatch Covers -->
-            <rect x="265" y="197" width="95" height="18" rx="2" fill="#475569" stroke="#1e293b" stroke-width="1.5"/>
-            <rect x="380" y="197" width="95" height="18" rx="2" fill="#475569" stroke="#1e293b" stroke-width="1.5"/>
-            <rect x="495" y="197" width="95" height="18" rx="2" fill="#475569" stroke="#1e293b" stroke-width="1.5"/>
-
-            <!-- Cranes -->
-            <line x1="370" y1="215" x2="370" y2="150" stroke="#eab308" stroke-width="5"/>
-            <line x1="370" y1="155" x2="435" y2="130" stroke="#eab308" stroke-width="4"/>
-            <line x1="485" y1="215" x2="485" y2="150" stroke="#eab308" stroke-width="5"/>
-            <line x1="485" y1="155" x2="550" y2="130" stroke="#eab308" stroke-width="4"/>
-
-            <!-- Deck Piping -->
-            <line x1="235" y1="209" x2="660" y2="209" stroke="#ef4444" stroke-width="3" stroke-dasharray="8,4"/>
-
-            <!-- Forecastle -->
-            <polygon points="650,215 735,197 745,215" fill="#334155"/>
-            <line x1="715" y1="200" x2="715" y2="167" stroke="#334155" stroke-width="2.5"/>
-
-            <!-- Hull -->
-            <path d="M 65 215 L 745 215 L 710 270 L 85 270 Z" fill="#991b1b" stroke="#450a0a" stroke-width="2"/>
-            <path d="M 78 253 L 721 253 L 710 270 L 85 270 Z" fill="#1e293b"/>
-            <text x="415" y="242" fill="rgba(255,255,255,0.92)" font-size="16" font-weight="900" letter-spacing="3" text-anchor="middle">FPMC</text>
-
-            <!-- Engine Room Cutaway -->
-            <rect x="130" y="221" width="100" height="28" rx="4" fill="rgba(15, 23, 42, 0.72)" stroke="#94a3b8" stroke-dasharray="3,2"/>
-            <text x="180" y="239" fill="#e2e8f0" font-size="10" text-anchor="middle" font-weight="bold">ENGINE ROOM</text>
-
-            <!-- Sea Waves -->
-            <path d="M 0 270 Q 40 263 80 270 T 160 270 T 240 270 T 320 270 T 400 270 T 480 270 T 560 270 T 640 270 T 720 270 T 800 270 L 800 350 L 0 350 Z" fill="rgba(2, 132, 199, 0.45)"/>
-
-            <!-- HOTSPOT 1: Mooring & Anchor -->
-            <g class="hotspot-group" onclick="selectZone(0)" id="hs-0">
-              <circle cx="705" cy="200" r="18" fill="#dc2626" class="pulse-circle" id="pulse-0"/>
-              <circle cx="705" cy="200" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-0"/>
-              <text x="705" y="205" fill="white" font-size="13" font-weight="bold" text-anchor="middle">1</text>
-            </g>
-
-            <!-- HOTSPOT 2: Cargo Holds & Hatch Covers -->
-            <g class="hotspot-group" onclick="selectZone(1)" id="hs-1">
-              <circle cx="428" cy="197" r="18" fill="#dc2626" class="pulse-circle" id="pulse-1"/>
-              <circle cx="428" cy="197" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-1"/>
-              <text x="428" y="202" fill="white" font-size="13" font-weight="bold" text-anchor="middle">2</text>
-            </g>
-
-            <!-- HOTSPOT 3: Engine Room & Workshop -->
-            <g class="hotspot-group" onclick="selectZone(2)" id="hs-2">
-              <circle cx="180" cy="235" r="18" fill="#dc2626" class="pulse-circle" id="pulse-2"/>
-              <circle cx="180" cy="235" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-2"/>
-              <text x="180" y="240" fill="white" font-size="13" font-weight="bold" text-anchor="middle">3</text>
-            </g>
-
-            <!-- HOTSPOT 4: Main Deck, Manifold & Gangway -->
-            <g class="hotspot-group" onclick="selectZone(3)" id="hs-3">
-              <circle cx="565" cy="209" r="18" fill="#dc2626" class="pulse-circle" id="pulse-3"/>
-              <circle cx="565" cy="209" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-3"/>
-              <text x="565" y="214" fill="white" font-size="13" font-weight="bold" text-anchor="middle">4</text>
-            </g>
-
-            <!-- HOTSPOT 5: Accommodation & Self-Closing/Bathroom Doors -->
-            <g class="hotspot-group" onclick="selectZone(4)" id="hs-4">
-              <circle cx="175" cy="170" r="18" fill="#dc2626" class="pulse-circle" id="pulse-4"/>
-              <circle cx="175" cy="170" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-4"/>
-              <text x="175" y="175" fill="white" font-size="13" font-weight="bold" text-anchor="middle">5</text>
-            </g>
-          </svg>
-        </div>
-
-        <div class="zone-pills" id="zone-pills"></div>
+  <!-- ==================== AREA 1: CREW AWARENESS & BRIEFING MATERIALS ==================== -->
+  <section class="briefing-section" id="section-briefing">
+    <div class="briefing-grid">
+      <!-- Left Card: TDP-FM12-1 Disaster Statistics -->
+      <div class="b-card">
+        <h2 id="b-stat-title">📊 歷年船員在船作業災害類型統計（TDP-FM12-1 告知單）</h2>
+        <p id="b-stat-desc" style="font-size: 0.85rem; color: var(--muted); margin-bottom: 0.85rem;">
+          依據台塑海運 2011 年迄今受傷案件統計，<strong>「被夾捲壓」與「被撞」合計佔比高達 48.0%</strong>，為全船首要防範重點：
+        </p>
+        <div id="disaster-bars"></div>
       </div>
 
-      <!-- Key Safety Numbers Quick-Check Card -->
-      <div class="golden-rules-card">
-        <h3 id="ui-kpi-title">📌 最新修訂 SOP 與保命紅線速查（整合 2022-MD-035 與案例改善對策）</h3>
-        <div class="kpi-grid">
-          <div class="kpi-item">
-            <span class="kpi-val">80 cm / 雙人</span>
-            <span class="kpi-label" id="ui-kpi-1">艙口圍淨空限制區<br>雙側監督對講機複誦才動車</span>
-          </div>
-          <div class="kpi-item">
-            <span class="kpi-val">禁戴手套</span>
-            <span class="kpi-label" id="ui-kpi-2">鑽床/車床/砂輪嚴禁戴手套<br>電焊敲渣須頭盔或護目鏡</span>
-          </div>
-          <div class="kpi-item">
-            <span class="kpi-val">槽車 / 門弓器</span>
-            <span class="kpi-label" id="ui-kpi-3">200kg油桶改槽車或搬運器<br>嚴禁調鬆門弓器螺絲</span>
-          </div>
-        </div>
+      <!-- Right Card: Basic Safety Rules & 14 High-Risk Ops -->
+      <div class="b-card">
+        <h2 id="b-rule-title">🛡️ 一、基本安全事項與 14 項高風險作業管制</h2>
+        <ul class="basic-rules-list" id="basic-rules-list"></ul>
+        <h3 id="b-hr-subtitle" style="font-size: 0.9rem; color: var(--danger); margin-top: 0.85rem;">
+          ⚠️ 大副／大管作業前必須親自檢查 PPE 之 14 項高風險作業：
+        </h3>
+        <div class="high-risk-tags" id="high-risk-tags"></div>
       </div>
     </div>
 
-    <!-- Right Column: Detail & Multi-Question Quiz -->
-    <div class="detail-card" id="detail-panel"></div>
-  </div>
+    <!-- Bottom Card: Head-to-Toe Injury Case Showcase -->
+    <div class="b-card">
+      <h2 id="b-h2t-title">🩺 「從頭到腳」真實職災案例與 SOP 改善對策宣導（依受傷部位檢視）</h2>
+      <p id="b-h2t-desc" style="font-size: 0.86rem; color: var(--muted); margin-bottom: 0.85rem;">
+        點擊下方身體部位篩選器，檢視船隊真實發生之受傷經過與公司修訂後之保命規定：
+      </p>
+      <div class="body-filter-bar" id="body-filter-bar"></div>
+      <div class="h2t-cards-grid" id="h2t-cards-grid"></div>
 
-  <!-- TDP-FM12 Digital Sign-Off & Cloud Excel Export Section -->
-  <div class="signoff-card" id="signoff-card">
-    <div class="signoff-header">
+      <!-- Original PDF Resource Links & CTA to Quiz -->
+      <div class="pdf-download-bar">
+        <div>
+          <strong style="color: var(--primary); font-size: 0.92rem;" id="b-pdf-title">📎 宣導文件原始檔下載（若已上傳至同層目錄可直接開啟）：</strong>
+          <div class="pdf-links" style="margin-top: 0.45rem;">
+            <a href="./TDP-FM12-1.pdf" target="_blank" class="btn-pdf" id="link-pdf-1">📄 船舶作業常見災害類型告知單 (TDP-FM12-1)</a>
+            <a href="./Head_to_Toe_Cases.pdf" target="_blank" class="btn-pdf" id="link-pdf-2">📘 從頭到腳職災案例彙編 (PDF)</a>
+          </div>
+        </div>
+        <button class="btn-start-quiz-cta" onclick="switchMainSection('quiz')" id="btn-go-quiz-main">
+          ✅ 宣導資料已詳閱，前往「船舶探索與測驗區」 ➔
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== AREA 2: INTERACTIVE VESSEL MAP & QUIZ ZONE ==================== -->
+  <section class="quiz-section active" id="section-quiz">
+    <div class="workspace">
+      <!-- Left Column -->
+      <div class="left-col">
+        <div class="map-card">
+          <div class="map-header">
+            <h2 id="ui-map-title">🚢 全船作業危害熱點地圖（點擊標記或下方按鈕切換區域）</h2>
+            <div class="legend">
+              <span><i class="dot-red"></i> <span id="ui-leg-todo">未完成題庫</span></span>
+              <span><i class="dot-green"></i> <span id="ui-leg-done">已全數答對</span></span>
+            </div>
+          </div>
+
+          <div class="ship-viewport">
+            <svg class="ship-svg" viewBox="0 0 800 350" xmlns="http://www.w3.org/2000/svg">
+              <!-- Clouds -->
+              <circle cx="120" cy="52" r="16" fill="rgba(255,255,255,0.65)"/>
+              <circle cx="140" cy="48" r="22" fill="rgba(255,255,255,0.65)"/>
+              <circle cx="162" cy="53" r="15" fill="rgba(255,255,255,0.65)"/>
+              <circle cx="590" cy="42" r="14" fill="rgba(255,255,255,0.55)"/>
+              <circle cx="608" cy="39" r="19" fill="rgba(255,255,255,0.55)"/>
+
+              <!-- Funnel -->
+              <polygon points="155,140 170,90 205,90 215,140" fill="#1e293b"/>
+              <rect x="167" y="101" width="40" height="10" fill="#dc2626"/>
+              <text x="173" y="109" fill="white" font-size="7" font-weight="bold">FPMC</text>
+
+              <!-- Superstructure -->
+              <rect x="120" y="140" width="115" height="75" rx="3" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+              <rect x="132" y="120" width="85" height="20" rx="2" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+              <rect x="125" y="108" width="102" height="12" rx="2" fill="#e2e8f0" stroke="#475569" stroke-width="1.5"/>
+              <rect x="135" y="111" width="82" height="5" fill="#0284c7"/>
+              <line x1="175" y1="108" x2="175" y2="78" stroke="#334155" stroke-width="3"/>
+              <line x1="160" y1="86" x2="190" y2="86" stroke="#334155" stroke-width="2.5"/>
+
+              <!-- Windows -->
+              <rect x="135" y="150" width="14" height="10" fill="#38bdf8"/>
+              <rect x="160" y="150" width="14" height="10" fill="#38bdf8"/>
+              <rect x="185" y="150" width="14" height="10" fill="#38bdf8"/>
+              <rect x="135" y="173" width="14" height="10" fill="#38bdf8"/>
+              <rect x="160" y="173" width="14" height="10" fill="#38bdf8"/>
+              <rect x="185" y="173" width="14" height="10" fill="#38bdf8"/>
+
+              <!-- Cargo Holds / Hatch Covers -->
+              <rect x="265" y="197" width="95" height="18" rx="2" fill="#475569" stroke="#1e293b" stroke-width="1.5"/>
+              <rect x="380" y="197" width="95" height="18" rx="2" fill="#475569" stroke="#1e293b" stroke-width="1.5"/>
+              <rect x="495" y="197" width="95" height="18" rx="2" fill="#475569" stroke="#1e293b" stroke-width="1.5"/>
+
+              <!-- Cranes -->
+              <line x1="370" y1="215" x2="370" y2="150" stroke="#eab308" stroke-width="5"/>
+              <line x1="370" y1="155" x2="435" y2="130" stroke="#eab308" stroke-width="4"/>
+              <line x1="485" y1="215" x2="485" y2="150" stroke="#eab308" stroke-width="5"/>
+              <line x1="485" y1="155" x2="550" y2="130" stroke="#eab308" stroke-width="4"/>
+
+              <!-- Deck Piping -->
+              <line x1="235" y1="209" x2="660" y2="209" stroke="#ef4444" stroke-width="3" stroke-dasharray="8,4"/>
+
+              <!-- Forecastle -->
+              <polygon points="650,215 735,197 745,215" fill="#334155"/>
+              <line x1="715" y1="200" x2="715" y2="167" stroke="#334155" stroke-width="2.5"/>
+
+              <!-- Hull with FPMC lettering -->
+              <path d="M 65 215 L 745 215 L 710 270 L 85 270 Z" fill="#991b1b" stroke="#450a0a" stroke-width="2"/>
+              <path d="M 78 253 L 721 253 L 710 270 L 85 270 Z" fill="#1e293b"/>
+              <text x="415" y="242" fill="rgba(255,255,255,0.92)" font-size="16" font-weight="900" letter-spacing="3" text-anchor="middle">FPMC</text>
+
+              <!-- Engine Room Cutaway -->
+              <rect x="130" y="221" width="100" height="28" rx="4" fill="rgba(15, 23, 42, 0.72)" stroke="#94a3b8" stroke-dasharray="3,2"/>
+              <text x="180" y="239" fill="#e2e8f0" font-size="10" text-anchor="middle" font-weight="bold">ENGINE ROOM</text>
+
+              <!-- Sea Waves -->
+              <path d="M 0 270 Q 40 263 80 270 T 160 270 T 240 270 T 320 270 T 400 270 T 480 270 T 560 270 T 640 270 T 720 270 T 800 270 L 800 350 L 0 350 Z" fill="rgba(2, 132, 199, 0.45)"/>
+
+              <!-- HOTSPOT 1: Mooring & Anchor -->
+              <g class="hotspot-group" onclick="selectZone(0)" id="hs-0">
+                <circle cx="705" cy="200" r="18" fill="#dc2626" class="pulse-circle" id="pulse-0"/>
+                <circle cx="705" cy="200" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-0"/>
+                <text x="705" y="205" fill="white" font-size="13" font-weight="bold" text-anchor="middle">1</text>
+              </g>
+
+              <!-- HOTSPOT 2: Cargo Holds & Hatch Covers -->
+              <g class="hotspot-group" onclick="selectZone(1)" id="hs-1">
+                <circle cx="428" cy="197" r="18" fill="#dc2626" class="pulse-circle" id="pulse-1"/>
+                <circle cx="428" cy="197" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-1"/>
+                <text x="428" y="202" fill="white" font-size="13" font-weight="bold" text-anchor="middle">2</text>
+              </g>
+
+              <!-- HOTSPOT 3: Engine Room & Workshop -->
+              <g class="hotspot-group" onclick="selectZone(2)" id="hs-2">
+                <circle cx="180" cy="235" r="18" fill="#dc2626" class="pulse-circle" id="pulse-2"/>
+                <circle cx="180" cy="235" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-2"/>
+                <text x="180" y="240" fill="white" font-size="13" font-weight="bold" text-anchor="middle">3</text>
+              </g>
+
+              <!-- HOTSPOT 4: Main Deck, Manifold & Gangway -->
+              <g class="hotspot-group" onclick="selectZone(3)" id="hs-3">
+                <circle cx="565" cy="209" r="18" fill="#dc2626" class="pulse-circle" id="pulse-3"/>
+                <circle cx="565" cy="209" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-3"/>
+                <text x="565" y="214" fill="white" font-size="13" font-weight="bold" text-anchor="middle">4</text>
+              </g>
+
+              <!-- HOTSPOT 5: Accommodation & Self-Closing/Bathroom Doors -->
+              <g class="hotspot-group" onclick="selectZone(4)" id="hs-4">
+                <circle cx="175" cy="170" r="18" fill="#dc2626" class="pulse-circle" id="pulse-4"/>
+                <circle cx="175" cy="170" r="16" fill="#dc2626" stroke="white" stroke-width="3" class="hotspot-ring" id="ring-4"/>
+                <text x="175" y="175" fill="white" font-size="13" font-weight="bold" text-anchor="middle">5</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="zone-pills" id="zone-pills"></div>
+        </div>
+
+        <!-- Key Safety Numbers Quick-Check Card -->
+        <div class="golden-rules-card">
+          <h3 id="ui-kpi-title">📌 全船保命紅線與修訂 SOP 數據速查</h3>
+          <div class="kpi-grid">
+            <div class="kpi-item">
+              <span class="kpi-val">≤ 20 kg / 80 cm</span>
+              <span class="kpi-label" id="ui-kpi-1">單人搬運上限 20kg<br>艙口圍 80cm 淨空限制區</span>
+            </div>
+            <div class="kpi-item">
+              <span class="kpi-val">禁戴手套 / 雙掛勾</span>
+              <span class="kpi-label" id="ui-kpi-2">鑽床/車床/砂輪嚴禁手套<br>無護籠爬梯背負式雙掛勾</span>
+            </div>
+            <div class="kpi-item">
+              <span class="kpi-val">O₂ 18~23% / 45s</span>
+              <span class="kpi-label" id="ui-kpi-3">密閉空間 LEL&lt;30%<br>全船失電待45秒照明恢復</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Detail & Multi-Question Quiz -->
+      <div class="detail-card" id="detail-panel"></div>
+    </div>
+
+    <!-- TDP-FM12 Digital Sign-Off & Cloud Excel Export Section -->
+    <div class="signoff-card" id="signoff-card">
       <div>
-        <h2 id="ui-sign-title">📋 TDP-FM12 第 14 項 / 異常案例訓練確認簽署與雲端匯出</h2>
+        <h2 id="ui-sign-title">📋 TDP-FM12-1 危害告知與案例訓練確認簽署（自動同步雲端試算表）</h2>
         <p id="ui-sign-desc" style="font-size: 0.9rem; color: var(--muted); margin-top: 0.25rem;">
-          完成上方全部 5 個船舶區域（共 10 題）後，可一鍵同步至岸端雲端試算表並下載 Excel (.csv) 備份。
+          完成上方全部 5 個船舶區域（共 10 題）後，填寫個人資料即可生成數位確認憑證並自動匯出至岸端雲端試算表。
         </p>
       </div>
-    </div>
 
-    <div class="form-grid">
-      <div class="form-group">
-        <label id="lbl-ship">船名 (Ship's Name)</label>
-        <input type="text" id="inp-ship" placeholder="例如：台塑安華輪 / FPMC ...">
+      <div class="form-grid">
+        <div class="form-group">
+          <label id="lbl-ship">船名 (Ship's Name)</label>
+          <input type="text" id="inp-ship" placeholder="例如：台塑安華輪 / FPMC ...">
+        </div>
+        <div class="form-group">
+          <label id="lbl-rank">職稱 (Rank)</label>
+          <select id="inp-rank">
+            <option value="船長 Master">船長 Master</option>
+            <option value="大副 Chief Officer">大副 Chief Officer</option>
+            <option value="二副/三副 2/O & 3/O">二副/三副 2/O & 3/O</option>
+            <option value="輪機長 Chief Engineer">輪機長 Chief Engineer</option>
+            <option value="大管輪 1st Engineer">大管輪 1st Engineer</option>
+            <option value="二管/三管 2/E & 3/E">二管/三管 2/E & 3/E</option>
+            <option value="水手長/幹練水手 BSN / AB">水手長/幹練水手 BSN / AB</option>
+            <option value="普通水手/實習生 OS / Cadet">普通水手/實習生 OS / Cadet</option>
+            <option value="銅匠/泵匠/加油 Fitter / Pumpman / Oiler">銅匠/泵匠/加油 Fitter / Pumpman / Oiler</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label id="lbl-name">船員姓名 (Seafarer's Name)</label>
+          <input type="text" id="inp-name" placeholder="請輸入全名">
+        </div>
+        <div class="form-group">
+          <label id="lbl-date">上船日期 (Date of Joining)</label>
+          <input type="date" id="inp-date">
+        </div>
       </div>
-      <div class="form-group">
-        <label id="lbl-rank">職稱 (Rank)</label>
-        <select id="inp-rank">
-          <option value="船長 Master">船長 Master</option>
-          <option value="大副 Chief Officer">大副 Chief Officer</option>
-          <option value="二副/三副 2/O & 3/O">二副/三副 2/O & 3/O</option>
-          <option value="輪機長 Chief Engineer">輪機長 Chief Engineer</option>
-          <option value="大管輪 1st Engineer">大管輪 1st Engineer</option>
-          <option value="二管/三管 2/E & 3/E">二管/三管 2/E & 3/E</option>
-          <option value="水手長/幹練水手 BSN / AB">水手長/幹練水手 BSN / AB</option>
-          <option value="普通水手/實習生 OS / Cadet">普通水手/實習生 OS / Cadet</option>
-          <option value="銅匠/泵匠/加油 Fitter / Pumpman / Oiler">銅匠/泵匠/加油 Fitter / Pumpman / Oiler</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label id="lbl-name">船員姓名 (Seafarer's Name)</label>
-        <input type="text" id="inp-name" placeholder="請輸入全名">
-      </div>
-      <div class="form-group">
-        <label id="lbl-date">上船日期 (Date of Joining)</label>
-        <input type="date" id="inp-date">
-      </div>
-    </div>
 
-    <div class="action-row">
-      <button class="btn-submit" id="btn-cert" disabled onclick="submitAndExport()">
-        🔒 尚有題目未完成作答 (0/10 題)
-      </button>
-      <button class="btn-csv" id="btn-download-csv" onclick="downloadLatestCsv()">
-        📥 下載 Excel (.csv) 紀錄檔
-      </button>
-    </div>
+      <div class="action-row">
+        <button class="btn-submit" id="btn-cert" disabled onclick="submitAndExport()">
+          🔒 尚有題目未完成作答 (0/10 題)
+        </button>
+        <button class="btn-csv" id="btn-download-csv" onclick="downloadLatestCsv()">
+          📥 下載 Excel (.csv) 紀錄檔
+        </button>
+      </div>
 
-    <div class="sync-status" id="sync-status"></div>
-    <div class="cert-box" id="cert-box"></div>
-  </div>
+      <div class="sync-status" id="sync-status"></div>
+      <div class="cert-box" id="cert-box"></div>
+    </div>
+  </section>
 
   <!-- Footer Reference -->
   <div class="stats-footer" id="ui-footer">
-    <strong>資料依據：</strong>台塑海運股份有限公司《船員在船作業常見之災害類型危害告知單》(TDP-FM12)、海事通告《2022-MD-035》(異常案例 2022-01～04) 及歷年「從頭到腳」工安案例彙編（涵蓋頭部濾網砸傷、眼睛敲焊渣、肩部岸管跌落、胸部開艙摔傷、手臂濕滑跌傷、手指自閉門/浴室門/止鏈器/艙蓋滾輪/鑽床/油桶夾傷、腿部機艙踩空/湧浪衝擊/澳洲梯滑落及人員落海案例）。
+    <strong>資料依據：</strong>台塑海運股份有限公司《船員在船作業常見之災害類型危害告知單》(TDP-FM12-1 June 2022) 與《從頭到腳職災案例彙編》（涵蓋頭部濾網砸傷、眼睛敲焊渣、肩部岸管跌落、胸部開艙摔傷、手臂濕滑跌傷、手指自閉門/止鏈器/艙蓋滾輪/鑽床/油桶夾傷、腿部機艙樓梯踩空/湧浪衝擊/澳洲梯滑落及人員落海案例）。
   </div>
 </div>
 
@@ -950,10 +1240,269 @@
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwy-X4fbEZdwa7dT5tPlckbk8lEl2ri5bX3wluuEZyW5FWRD_MtpifJ1zIjF9hvAxlu/exec";
 
 let lang = 'zh';
+let currentSection = 'quiz'; // 'briefing' or 'quiz'
 let currentZone = 0;
-let activeTab = 'cases';
+let activeTab = 'quiz'; // Default open quiz or cases in right panel
+let selectedBodyPart = 'all';
 let latestRecord = null;
 
+// Data for Section 1: Briefing & Awareness Materials
+const briefingData = {
+  zh: {
+    stats: [
+      { label: "1. 被夾（捲、壓）Being roll clamp/press", pct: 29.3, top: true },
+      { label: "2. 被撞 Be Hit", pct: 18.7, top: true },
+      { label: "3. 墜落、滾落 Fall", pct: 13.3, top: false },
+      { label: "4. 跌倒 Fall Down", pct: 12.0, top: false },
+      { label: "5. 被切（割、擦）Cut / Abrasion", pct: 9.3, top: false },
+      { label: "6. 高、低溫接觸 Exposure to High/Low Temp", pct: 5.3, top: false },
+      { label: "7. 其他（異物飛入眼睛）Foreign Object in Eye", pct: 5.0, top: false },
+      { label: "8. 不當動作 Improper Action", pct: 2.7, top: false },
+      { label: "9. 物體飛落 Falling Objects", pct: 2.7, top: false },
+      { label: "10. 有害物接觸 Exposure to Harmful Substances", pct: 1.3, top: false }
+    ],
+    basicRules: [
+      "作業前，必須確實召開工前會議（TBM），大副／大管必須確實宣導作業程序及要求穿戴 PPE 作業。",
+      "熟讀甲板／機艙 SOP、安全提示手冊、公司程序書規定，並確實遵守規定作業。",
+      "從事下方 14 項高風險作業時，大副／大管須在作業前親自檢查人員已確實穿戴 PPE。",
+      "除 14 項高風險作業外，其他作業由作業人員自行檢查自身 PPE 是否完整穿戴，確認無虞後才能作業。",
+      "單人人工搬運重量不可超過 20 公斤；高度 2 公尺以上作業須配戴背負式安全帶並採「3點不動1點移動」；進入密閉空間前氧氣須在 18%～23%、LEL < 30%、H₂S < 10ppm、CO < 35ppm。"
+    ],
+    highRiskOps: [
+      "動火作業", "密閉空間作業", "冷作作業", "舷外作業", "高空作業",
+      "電氣設備及電路作業", "水下作業", "管路及壓力容器作業", "小船靠泊",
+      "惡劣天氣甲板作業", "吊重作業", "氣體測量及測量儀器作業", "測試 1000V 高壓電"
+    ],
+    bodyParts: [
+      { id: "all", label: "全部部位 (13件)" },
+      { id: "head", label: "頭部與眼睛 (2件)" },
+      { id: "upper", label: "肩部、胸部與手臂 (3件)" },
+      { id: "finger", label: "手指與手部 (5件)" },
+      { id: "leg", label: "腿部與落海 (3件)" }
+    ],
+    cases: [
+      {
+        part: "head",
+        partLabel: "頭部 | 貨艙吊掛",
+        title: "水手長遭掉落濾網砸傷頭部事件",
+        desc: "散裝輪塢修洗艙後，水手（首次上船經驗不足）吊掛艙內濾網時繩結綑綁不確實，起吊至艙口時繩結鬆脫，3 公斤濾網掉落砸脫水手長安全帽並劃傷頭部。",
+        fix: "改善對策：吊掛繩結須由資深人員確認綁牢；起吊期間嚴禁進入吊掛範圍，指揮人員與艙內人員全程使用對講機溝通。"
+      },
+      {
+        part: "head",
+        partLabel: "眼睛 | 機艙電焊",
+        title: "銅匠敲焊渣作業異物進入右眼事件",
+        desc: "原油船銅匠在機艙焊接淡水管後，僅使用手持式面罩未配戴護目鏡即進行敲焊渣作業，導致焊渣碎屑飛入右眼受傷。",
+        fix: "修訂電焊 SOP：電焊與敲焊渣作業時，須優先配戴「頭盔式面罩」；若使用手持式面罩，必須搭配「一般作業護目鏡」使用。"
+      },
+      {
+        part: "upper",
+        partLabel: "肩部 | 岐管平台",
+        title: "幹練水手協助拆岸管自 1.7m 平台跌落",
+        desc: "化學船卸貨換管時，船員協助碼頭人員鬆開岸管支撐架螺絲，因板手滑脫且背對甲板施力不當，自 1.7 公尺高岐管平台跌落致右側鎖骨骨折。",
+        fix: "通告禁令：岸管拆接管係碼槽處負責業務，嚴禁船員從事非業務範圍作業；發生事故須依異常管理程序書時限通報。"
+      },
+      {
+        part: "upper",
+        partLabel: "胸部 | 甲板開艙",
+        title: "水手長開啟大艙蓋絆倒撞擊加強材",
+        desc: "化學輪連續接送領港、卸貨與洗艙後水手長精神疲勞，開啟 5S 大艙蓋時腳步絆倒失去重心，左側肋骨撞擊甲板加強材。",
+        fix: "管理對策：合理調配甲板作業人力與休息時間，避免連續高負荷作業疲勞，行走與操作時注意甲板加強材等障礙物。"
+      },
+      {
+        part: "upper",
+        partLabel: "手臂 | 甲板通道",
+        title: "水手因甲板濕滑絆到鋼索摔傷左肘",
+        desc: "原油船卸貨離港固定左舷舷梯後穿越下方時，因甲板潮濕且安全鞋防滑力不足打滑，絆到甲板鋼索致左肘著地腫傷。",
+        fix: "裝備改善：全面配發具油漬防滑、防穿刺功能之新型客製安全鞋，濕滑甲板行走時避開鋼索並走指定防滑通道。"
+      },
+      {
+        part: "finger",
+        partLabel: "手指 | 自閉門失電",
+        title: "全船失電風壓導致機艙自閉門夾傷食指",
+        desc: "化學輪全船跳電失電時，加油匠摸黑趕往機艙開啟自閉門，因機艙內風壓使門關閉過快，左手下意識擋門遭門鎖夾傷食指。",
+        fix: "應變規定：全船跳電視線不良時，應等待緊急發電機啟動（45 秒內）及照明恢復再行動；所有門開啟後手部勿停留在門邊，並列入 MMP-FM20 每週檢查。"
+      },
+      {
+        part: "finger",
+        partLabel: "手指 | 錨機止鏈器",
+        title: "水手起錨抬起止鏈器遭把手夾傷手指",
+        desc: "液化氣輪起錨時，新進水手協助抬起右錨機止鏈器，因原廠把手位置過低與導鏈基座間無空隙，把手轉動到底時未鬆手遭夾傷。",
+        fix: "設備與訓練改善：切除過低位置之把手消除夾擠點；新進船員上船一個月內須落實設備操作施力指導。"
+      },
+      {
+        part: "finger",
+        partLabel: "手指 | 艙蓋滾輪除鏽",
+        title: "幹練水手氣動槍除鏽滾輪夾傷小指",
+        desc: "散裝輪航行途中，幹練水手使用氣動槍幫第 5 貨艙艙蓋滾輪除鏽時滑手，右手隨轉動的滾輪往下夾入滾輪與軌道縫隙致小指骨折。",
+        fix: "防呆治具：船上製作專用「止動器」，關艙狀態下針對滾輪除鏽前，必須依方向將止動器卡入滾輪與軌道縫隙防止滾動。"
+      },
+      {
+        part: "finger",
+        partLabel: "手指 | 開關艙作業",
+        title: "見習三副手扶艙蓋軌道遭滾輪壓傷三指",
+        desc: "開啟 1 號貨艙期間，見習三副在旁檢查掃艙工具時右手扶靠艙蓋軌道，遭移動中的艙蓋滾輪輾壓致中指、無名指與小指嚴重受傷。",
+        fix: "硬性規定：離艙口圍至少 80 公分畫設 CLEAR AREA 限制區；開關艙至少配置 2 人（兩側監督員）以對講機確認淨空並複誦後方可啟動。"
+      },
+      {
+        part: "finger",
+        partLabel: "手指 | 鑽床與油桶",
+        title: "銅匠戴棉紗手套操作鑽床 & 搬運 200kg 油桶夾傷",
+        desc: "① 銅匠戴棉紗手套操作鑽床鑽孔，手套遭旋轉夾頭捲入致中指骨折。② 僅 3 人徒手立起 35 桶 53 加侖（200 公斤）潤滑油桶，體力不支夾傷拇指。",
+        fix: "嚴格規範：① 依 SHM-004 操縱鑽床、車床、砂輪嚴禁戴手套，並加裝可調式安全防護罩。② 200 公斤油桶一律改用槽車補給或使用油桶搬運器。"
+      },
+      {
+        part: "leg",
+        partLabel: "腿部 | 機艙樓梯",
+        title: "輪機長下機艙樓梯踩空扭傷右腳踝",
+        desc: "原油輪輪機長由甲板下機艙二層樓梯時不慎踩空階梯，導致右腳踝嚴重扭傷（疑似骨折或脫臼）。",
+        fix: "行走規範：上下機艙陡峭階梯時必須手握扶手、專注腳下每階踏板，切勿跨階或手中抱持物品遮擋視線。"
+      },
+      {
+        part: "leg",
+        partLabel: "腿部 | 惡劣海象",
+        title: "泵匠開啟水密門遭瞬間湧浪沖擊雙腿骨折",
+        desc: "化學輪海象不佳期間，兩名泵匠返回住艙開啟水密門時背對海浪，遭下風處瞬間上浪湧浪擊中並撞擊甲板設備，致雙腿骨折。",
+        fix: "海象警覺：惡劣天氣甲板通行須隨時觀察浪況，開啟通往外甲板之水密門前先確認海面動態，切勿背對湧浪。"
+      },
+      {
+        part: "leg",
+        partLabel: "腿部與落海 | 澳洲梯與欄杆",
+        title: "澳洲梯滑落艙底骨裂 & 抓中間欄杆斷裂落海",
+        desc: "① 散裝輪幹練水手洗艙急於爬下澳洲梯踩空滑落艙底致右腳底骨裂。② 某散裝船人員接近上船時雙手抓住中間欄杆，欄杆突然斷裂導致人員落海。",
+        fix: "防墜規定：① 上下無護籠之直爬梯/澳洲梯須穿背負式安全帶以「雙掛勾」勾掛移動。② 登離輪嚴禁拉扯中間欄杆，舷外作業須穿救生衣與安全帶。"
+      }
+    ]
+  },
+  en: {
+    stats: [
+      { label: "1. Caught / Crushed (Roll, Clamp, Press)", pct: 29.3, top: true },
+      { label: "2. Struck By (Be Hit)", pct: 18.7, top: true },
+      { label: "3. Fall from Height", pct: 13.3, top: false },
+      { label: "4. Slips & Trips (Fall Down)", pct: 12.0, top: false },
+      { label: "5. Cut / Abrasion", pct: 9.3, top: false },
+      { label: "6. Exposure to High/Low Temperature", pct: 5.3, top: false },
+      { label: "7. Foreign Object Flying into Eye", pct: 5.0, top: false },
+      { label: "8. Improper Action", pct: 2.7, top: false },
+      { label: "9. Falling Objects", pct: 2.7, top: false },
+      { label: "10. Exposure to Harmful Substances", pct: 1.3, top: false }
+    ],
+    basicRules: [
+      "Conduct a pre-job Toolbox Meeting (TBM) before work; C/O and 2/E must brief procedures and enforce PPE.",
+      "Learn and comply with Deck/Engine SOPs, Safety Instruction Manual, and Company Procedures.",
+      "For the 14 High-Risk Operations below, C/O or 2/E must personally verify PPE before work starts.",
+      "For all other tasks, operators must self-check full PPE before starting.",
+      "Key Limits: Manual lift max 20 kg; Full-body harness & 3-point contact above 2m; Enclosed space O2 18%–23%, LEL < 30%, H2S < 10ppm, CO < 35ppm."
+    ],
+    highRiskOps: [
+      "Hot Work", "Enclosed Space", "Cold Work", "Work Overside", "Work Aloft",
+      "Electrical Circuits", "Underwater Work", "Pipelines & Pressure Vessels", "Small Craft Alongside",
+      "Adverse Weather Deck Work", "Lifting Ops", "Gas Testing", "High Voltage (>1000V)"
+    ],
+    bodyParts: [
+      { id: "all", label: "All Body Parts (13)" },
+      { id: "head", label: "Head & Eyes (2)" },
+      { id: "upper", label: "Shoulder, Chest & Arm (3)" },
+      { id: "finger", label: "Fingers & Hands (5)" },
+      { id: "leg", label: "Legs & Overboard (3)" }
+    ],
+    cases: [
+      {
+        part: "head",
+        partLabel: "Head | Cargo Hold Hoisting",
+        title: "Bosun Struck on Head by Falling Filter",
+        desc: "A newly joined OS tied an insecure knot when hoisting a 3 kg filter out of a cargo hold. The knot slipped at the hatch coaming, knocking off the Bosun's helmet and lacerating his head.",
+        fix: "Countermeasure: Senior crew must verify knots; strictly prohibit entering beneath suspended loads and use walkie-talkies throughout hoisting."
+      },
+      {
+        part: "head",
+        partLabel: "Eyes | Engine Room Welding",
+        title: "Fitter Eye Injury While Chipping Welding Slag",
+        desc: "After welding a freshwater pipe in the engine room, a Fitter chipped slag using only a hand shield without safety goggles, allowing slag debris to enter his right eye.",
+        fix: "Updated Welding SOP: Wear a welding helmet (or hand shield PLUS safety goggles) during both welding and slag chipping."
+      },
+      {
+        part: "upper",
+        partLabel: "Shoulder | Manifold Platform",
+        title: "AB Fell 1.7m from Manifold Platform Assisting Shore Hose",
+        desc: "While helping terminal workers unbolt a shore hose support bracket, the wrench slipped and the AB fell 1.7m to the main deck, fracturing his right collarbone.",
+        fix: "Strict Prohibition: Shore hose connection/disconnection is terminal scope; crew are prohibited from non-scope tasks."
+      },
+      {
+        part: "upper",
+        partLabel: "Chest | Deck Hatch Cover",
+        title: "Bosun Tripped and Struck Deck Stiffener Opening Hatch",
+        desc: "Fatigued after consecutive pilot, cargo, and tank-cleaning ops, the Bosun tripped while opening No. 5S hatch cover, striking his left ribs on a deck stiffener.",
+        fix: "Countermeasure: Manage work/rest hours properly to prevent fatigue and stay alert to deck stiffeners and coamings."
+      },
+      {
+        part: "upper",
+        partLabel: "Arm | Wet Main Deck",
+        title: "OS Slipped on Wet Deck and Tripped Over Wire",
+        desc: "While securing the port gangway on a wet deck, an OS slipped due to inadequate shoe grip and tripped over a deck wire, injuring his left elbow.",
+        fix: "PPE Upgrade: Issued new slip-resistant, oil-proof safety shoes; use designated non-skid walkways."
+      },
+      {
+        part: "finger",
+        partLabel: "Fingers | Blackout Self-Closing Door",
+        title: "Oiler Finger Pinched in Fire Door During Vessel Blackout",
+        desc: "During a total blackout, an Oiler rushed in the dark to the engine room and blocked a fast-closing door (accelerated by air pressure) with his left hand, lacerating his index finger.",
+        fix: "Blackout Rule: Wait up to 45 seconds for emergency generator/lighting restoration; never place hands on door edges (inspected weekly via MMP-FM20)."
+      },
+      {
+        part: "finger",
+        partLabel: "Fingers | Anchor Windlass",
+        title: "OS Hand Pinched Lifting Chain Stopper Handle",
+        desc: "While heaving anchor on an LPG carrier, an OS caught his hand between the low-mounted chain stopper handle and roller foundation.",
+        fix: "Modification: Removed the low handle to eliminate the pinch point; supervise new crew during first-month equipment ops."
+      },
+      {
+        part: "finger",
+        partLabel: "Fingers | Hatch Roller Derusting",
+        title: "AB Pinky Fractured Derusting Unchocked Hatch Roller",
+        desc: "While derusting a hatch roller with a pneumatic needle gun, the roller rotated when the gun slipped, pinching the AB's right pinky between roller and track.",
+        fix: "Safety Chock: Place a custom mechanical stopper/chock between the hatch roller and track before derusting."
+      },
+      {
+        part: "finger",
+        partLabel: "Fingers | Hatch Cover Ops",
+        title: "Junior 3/O Crushed Three Fingers on Hatch Track",
+        desc: "While checking sweeping tools during No. 1 hatch opening, a Junior 3/O rested his right hand on the track and had three fingers crushed by the moving roller.",
+        fix: "Mandatory Rule: Paint an 80 cm CLEAR AREA line around coamings; require 2-side lookouts and walkie-talkie read-back before moving hatches."
+      },
+      {
+        part: "finger",
+        partLabel: "Fingers | Drill Press & 200kg Drums",
+        title: "Fitter Glove Caught in Drill Chuck & 200kg Oil Drum Pinch",
+        desc: "1) Cotton glove caught in rotating drill press chuck, fracturing middle finger. 2) Three crew manually stood up thirty-five 200 kg oil drums, pinching a Fitter's thumb.",
+        fix: "Rules: 1) Per SHM-004, NEVER wear gloves on drills/lathes/grinders and use safety guards. 2) Supply 200 kg drums via tank truck or drum carrier."
+      },
+      {
+        part: "leg",
+        partLabel: "Legs | Engine Room Stairs",
+        title: "Chief Engineer Sprained Ankle on Engine Room Stairs",
+        desc: "While descending engine room stairs from the main deck, the Chief Engineer missed a step and severely sprained his right ankle.",
+        fix: "Safe Transit: Hold handrails firmly and watch every step on steep engine room stairs."
+      },
+      {
+        part: "leg",
+        partLabel: "Legs | Heavy Weather Waves",
+        title: "Pumpmen Leg Fractures from Sudden Wave Opening Door",
+        desc: "In rough seas, two Pumpmen opened a weather watertight door with their backs to the sea and were struck by a sudden wave, suffering leg fractures.",
+        fix: "Weather Vigilance: Check sea conditions before opening weather doors and never turn your back to waves."
+      },
+      {
+        part: "leg",
+        partLabel: "Legs & MOB | Australian Ladder & Railing",
+        title: "Fall from Cargo Hold Ladder & Guardrail Snap MOB",
+        desc: "1) An AB hurried down a hold Australian ladder, slipped, and fractured his heel. 2) A crew member pulled on a middle guardrail while boarding; it snapped and caused an MOB.",
+        fix: "Fall Prevention: 1) Wear a full-body harness with double lanyards on unguarded hold ladders. 2) Never pull on middle guardrails; wear lifejackets overside."
+      }
+    ]
+  }
+};
+
+// Data for Section 2: Interactive Ship Map & 10 Curated Quiz Questions
 const zonesData = [
   {
     id: 0,
@@ -962,13 +1511,13 @@ const zonesData = [
       tag: "熱區 01 | 錨機止鏈器與帶解纜作業",
       stats: ["被夾捲壓 (29.3%)", "被撞 (18.7%)", "物體飛落 (2.7%)"],
       cases: [
-        "【止鏈器把手夾傷手指】液化氣輪於錨地準備起錨，大副與新進水手協助抬起右錨機止鏈器時，因原廠把手位置過低且水手未及時鬆手，手部遭止鏈器把手與導鏈滾輪基座夾傷（事後已切除過低把手改善）。",
-        "【斷纜回彈與拋引纜誤傷】絞纜機調整纜繩時斷纜回彈擊破大副安全帽；離港拋引纜前未確認拖船人員位置，卸扣擊傷拖船船員眉角。"
+        "【止鏈器把手夾傷手指】液化氣輪起錨時，新進水手協助抬起右錨機止鏈器，因原廠把手過低且未及時鬆手，手部遭把手與導鏈滾輪基座夾傷（已切除過低把手改善）。",
+        "【斷纜回彈與拋引纜誤傷】右舷絞纜機斷纜回彈擊破大副安全帽；離港拋引纜前未確認拖船人員位置，卸扣擊傷拖船船員眉角。"
       ],
       rules: [
-        "操作錨機止鏈器抬起或放下時，手部應握於安全施力點並隨時注意與導鏈基座間的夾擠間隙，禁止將手指置於轉動死角。",
+        "操作錨機止鏈器時，手部應握於安全施力點並避開與導鏈基座間的夾擠死角。",
         "絞纜機啟動前及運轉時，嚴禁人員站立於「繫泊作業管制區（斷纜回彈半徑）」內；拋引纜前必須目視確認拖船及碼頭人員退至安全區。",
-        "新進船員執行高風險甲板作業時，必須有資深船員在旁指導與確認（落實 TDP-FM13 進一步熟悉）。"
+        "新進船員執行甲板作業時，必須有資深船員在旁指導與確認。"
       ],
       quizzes: [
         {
@@ -1006,7 +1555,7 @@ const zonesData = [
       rules: [
         "When lifting/lowering the anchor chain stopper, watch clearance between the handle and roller foundation and keep fingers out of pinch points.",
         "Prohibit all personnel from entering the Mooring Snap-back Zone during winch operation; verify tug crew clearance before throwing heaving lines.",
-        "Ensure senior crew supervise newly joined seafarers during deck operations (TDP-FM13)."
+        "Ensure senior crew supervise newly joined seafarers during deck operations."
       ],
       quizzes: [
         {
@@ -1043,12 +1592,12 @@ const zonesData = [
       cases: [
         "【見習三副遭艙蓋滾輪壓傷】開艙期間見習三副在旁檢查掃艙工具，右手扶靠艙蓋軌道遭滾輪壓傷三指（事後規定離艙口圍至少 80 公分畫設 CLEAR AREA 限制區，且須雙人監督對講機複誦才可開關艙）。",
         "【艙蓋滾輪除鏽與吊掛濾網砸頭】幹練水手用氣動槍幫艙蓋滾輪除鏽時未放止動器，滾輪轉動夾斷小指；另散裝輪貨艙吊掛 3 公斤濾網時繩結鬆脫且未使用對講機溝通，濾網掉落砸傷下方水手長頭部。",
-        "【澳洲梯下艙滑落骨裂】幹練水手洗艙急於下艙踩空澳洲梯滑落艙底致右腳底骨裂（無護籠直爬梯須穿背負式安全帶以雙掛勾勾掛移動）。"
+        "【澳洲梯下艙滑落骨裂】幹練水手洗艙急於下艙踩空澳洲梯滑落艙底致右腳底骨裂。"
       ],
       rules: [
         "離艙口圍至少 80 公分處須畫設限制區域（CLEAR AREA）；開關艙須配置至少 2 人（兩側監督員），以對講機確認「作業現場已淨空」並複誦後方可啟動操車。",
         "關艙狀態下針對艙蓋滾輪進行除鏽保養前，必須在滾輪與軌道縫隙放置「止動器」固定，嚴禁徒手扶靠軌道。",
-        "貨艙吊桿起吊工具（如濾網）前須確實綁牢繩結，起吊期間嚴禁人員進入吊掛下方範圍，並全程使用對講機保持指揮溝通。",
+        "貨艙吊桿起吊工具（如濾網）前須確實綁牢繩結，起吊期間嚴禁人員進入吊掛下方範圍，並全程使用對講機保持溝通。",
         "上下無護籠或平台之貨艙直爬梯/澳洲梯時，須穿戴背負式安全帶以「雙掛勾」交替勾掛於梯子上移動（3點不動1點動），進入密閉空間前須測氧 18%～23%。"
       ],
       quizzes: [
@@ -1072,7 +1621,7 @@ const zonesData = [
             "3 公斤濾網很輕，就算繩結鬆脫戴著安全帽也不會受傷"
           ],
           answer: 1,
-          feedback: "正確！案例 2022-04 顯示僅 3 公斤濾網從艙口墜落仍砸脫安全帽並劃傷頭部；滾輪除鏽也必須放置止動器固定。"
+          feedback: "正確！僅 3 公斤濾網從艙口墜落仍會砸脫安全帽並劃傷頭部；滾輪除鏽也必須放置止動器固定。"
         }
       ]
     },
@@ -1083,7 +1632,7 @@ const zonesData = [
       cases: [
         "[Hatch Roller Crush] A Junior 3/O rested his right hand on the track during hatch opening and crushed 3 fingers (mandated an 80 cm CLEAR AREA line and 2-person walkie-talkie read-back before moving hatches).",
         "[Roller Derusting & Falling Filter] An AB crushed his pinky while derusting an unchocked hatch roller; a poorly tied 3 kg filter fell from the hatch boom and injured the Bosun's head.",
-        "[Australian Ladder Fall] An AB slipped from a cargo hold ladder and fractured his heel (requires full-body harness with double lanyards on unguarded ladders)."
+        "[Australian Ladder Fall] An AB slipped from a cargo hold ladder and fractured his heel."
       ],
       rules: [
         "Paint a restricted zone (CLEAR AREA) at least 80 cm from the hatch coaming; require 2 lookouts and walkie-talkie clearance read-back before operating hatch controls.",
@@ -1112,7 +1661,7 @@ const zonesData = [
             "A 3 kg filter is too light to cause head injury if it drops"
           ],
           answer: 1,
-          feedback: "Correct! Case 2022-04 proved a 3 kg falling filter can knock off a helmet and lacerate the head; always chock rollers before derusting."
+          feedback: "Correct! A 3 kg falling filter can knock off a helmet and lacerate the head; always chock rollers before derusting."
         }
       ]
     }
@@ -1121,18 +1670,18 @@ const zonesData = [
     id: 2,
     zh: {
       name: "3. 機艙、工作間與油桶補給",
-      tag: "熱區 03 | 鑽床禁戴手套、電焊敲渣、主機滑油與200kg油桶",
-      stats: ["被夾捲壓 (29.3%)", "被切割擦 (9.3%)", "異物入眼 (5.0%)", "設備故障 (2022-01)"],
+      tag: "熱區 03 | 鑽床禁戴手套、電焊敲渣與 200kg 油桶",
+      stats: ["被夾捲壓 (29.3%)", "被切割擦 (9.3%)", "異物入眼 (5.0%)", "高低溫接觸 (5.3%)"],
       cases: [
-        "【鑽床戴棉紗手套捲入骨折】靠泊韓國蔚山港期間，銅匠戴棉紗手套操作鑽床鑽孔，左手手套遭旋轉夾頭捲入致中指骨折（公司程序書 SHM-004 嚴禁操作鑽床、車床、砂輪時戴手套，並加裝可調式安全防護罩）。",
-        "【敲焊渣異物入眼 & 200kg 油桶夾傷】銅匠僅用手持面罩未戴護目鏡敲焊渣致異物入眼；另補給 35 桶 53 加侖潤滑油（每桶 200 公斤）僅 3 人徒手滾動立起，銅匠右手拇指遭油桶夾傷骨折。",
-        "【重要設備異常 2022-01 主機抱軸】某輪航行途中因滑油管理不確實變質，主機 #1 缸軸瓦抱軸失去動力拖帶進廠（規定每 3 個月滑油化驗須附取樣照片，TOP4 須重視重要異常警報）。"
+        "【鑽床戴棉紗手套捲入骨折】銅匠戴棉紗手套操作鑽床鑽孔，左手手套遭旋轉夾頭捲入致中指骨折（程序書 SHM-004 嚴禁操作鑽床、車床、砂輪時戴手套，並加裝可調式安全防護罩）。",
+        "【敲焊渣異物入眼】銅匠僅用手持面罩未戴護目鏡敲焊渣致異物入眼（修訂 SOP 要求電焊與敲焊渣須戴頭盔式面罩或手持面罩搭配護目鏡）。",
+        "【200kg 油桶夾傷 & 鍋爐油管燙傷】僅 3 人徒手立起 35 桶 200 公斤潤滑油桶致銅匠拇指骨折；另大管輪拆解鍋爐電磁閥遭殘餘燃油燙傷手掌。"
       ],
       rules: [
         "依據程序書 SHM-004，操作鑽床、車床、砂輪等旋轉設備時「嚴禁配戴任何手套」，且必須放下可調式安全防護罩。",
         "電焊及「敲焊渣」作業時，必須優先配戴頭盔式面罩；若使用手持式面罩，必須搭配一般作業護目鏡使用。",
-        "53 加侖滿裝潤滑油桶重約 200 公斤，碼頭允許下一律改用「槽車補給」；若必須使用油桶，應使用「油桶搬運器」輔助並指派專人指揮。",
-        "輪機團隊每 3 個月滑油取樣送驗須檢附取樣照片，TOP4 遇主機/發電機重要異常警報必須立即確認設備狀況並通報岸端。"
+        "53 加侖滿裝潤滑油桶重約 200 公斤，碼頭允許下一律改用「槽車補給」；若必須使用油桶，應使用「油桶搬運器」輔助並指派專人指揮（一般單人搬運上限 20 公斤）。",
+        "保養鍋爐或管路前必須確認電源、熱源及公用流體關斷，管路確實排空卸壓放殘。"
       ],
       quizzes: [
         {
@@ -1161,18 +1710,18 @@ const zonesData = [
     },
     en: {
       name: "3. Engine Room, Workshop & Drums",
-      tag: "Zone 03 | Drill Press, Chipping Slag, Lube Oil & 200kg Drums",
-      stats: ["Caught/Crushed (29.3%)", "Cuts (9.3%)", "Eye Injury (5.0%)", "Host Failure (2022-01)"],
+      tag: "Zone 03 | Drill Press, Chipping Slag & 200kg Drums",
+      stats: ["Caught/Crushed (29.3%)", "Cuts (9.3%)", "Eye Injury (5.0%)", "Thermal Burns (5.3%)"],
       cases: [
         "[Drill Press Entanglement] A Fitter wearing cotton gloves had his left hand pulled into the rotating drill chuck, fracturing his middle finger (SHM-004 strictly prohibits gloves on drills/lathes/grinders).",
-        "[Chipping Slag & 200kg Oil Drums] A Fitter suffered an eye injury chipping slag without safety goggles; 3 crew manually handled thirty-five 200 kg lube oil drums, crushing a Fitter's thumb.",
-        "[Major Equipment Failure 2022-01] Deteriorated lube oil caused #1 main bearing seizure and loss of propulsion (requires 3-month lube oil sampling with photos and strict TOP4 alarm response)."
+        "[Chipping Slag Eye Injury] A Fitter suffered an eye injury chipping slag without safety goggles (updated SOP requires welding helmet or hand shield + goggles).",
+        "[200kg Oil Drums & Fuel Scald] Three crew manually stood up thirty-five 200 kg oil drums, crushing a Fitter's thumb; 1/E suffered palm burns from residual fuel in a boiler valve."
       ],
       rules: [
         "Per SHM-004, gloves are STRICTLY PROHIBITED when operating drill presses, lathes, or grinding wheels; always lower the adjustable safety guard.",
         "Wear a welding helmet (or hand shield PLUS safety goggles) during both welding and slag chipping.",
-        "Full 53-gallon lube oil drums weigh ~200 kg: use bulk tank truck supply whenever permitted by the terminal, or use a drum carrier/trolley with a designated commander.",
-        "Attach sampling photos for 3-monthly lube oil lab tests; TOP4 must immediately verify and report critical main/aux engine alarms."
+        "Full 53-gallon lube oil drums weigh ~200 kg: use bulk tank truck supply whenever permitted by the terminal, or use a drum carrier/trolley (general manual lifting limit is 20 kg).",
+        "Isolate power, heat, and fluids and depressurize/drain lines completely before boiler or pipeline maintenance."
       ],
       quizzes: [
         {
@@ -1205,16 +1754,16 @@ const zonesData = [
     zh: {
       name: "4. 主甲板、岐管與舷外落海防護",
       tag: "熱區 04 | 非業務範圍禁令、甲板濕滑與登離輪防墜",
-      stats: ["墜落滾落 (13.3%)", "跌倒 (12.0%)", "人員落海"],
+      stats: ["墜落滾落 (13.3%)", "跌倒 (12.0%)", "有害物接觸 (1.3%)"],
       cases: [
-        "【協助碼頭拆岸管自岐管平台跌落】化學船卸貨時三名船員協助碼頭人員鬆開岸管支撐架螺絲，因板手滑脫重心不穩自 1.7 公尺高岐管平台跌落甲板，致右側鎖骨骨折（通告船隊嚴禁船員從事碼槽處負責之拆接岸管非業務範圍作業）。",
-        "【甲板濕滑絆倒 & 抓欄杆斷裂落海】離港固定左舷舷梯時因甲板濕滑絆到鋼索致左肘腫傷；另某散裝輪人員接近上船時雙手抓住中間欄杆，欄杆突然斷裂導致人員落海。",
-        "【泵匠開啟水密門遭湧浪沖擊骨折】海象不佳時兩名泵匠背對海浪開啟水密門，遭瞬間湧浪擊中撞擊甲板設備，致雙腿骨折。"
+        "【協助碼頭拆岸管自岐管平台跌落】化學船卸貨時船員協助碼頭人員鬆開岸管支撐架螺絲，板手滑脫自 1.7 公尺高岐管平台跌落致右側鎖骨骨折（嚴禁船員從事碼槽處負責之拆接岸管非業務範圍作業）。",
+        "【甲板濕滑絆倒 & 抓欄杆斷裂落海】固定左舷舷梯時因甲板濕滑絆到鋼索致左肘腫傷；另某散裝輪人員接近上船時雙手抓住中間欄杆，欄杆突然斷裂導致人員落海。",
+        "【泵匠開啟水密門遭湧浪沖擊骨折】海象不佳時兩名泵匠背對海浪開啟水密門，遭瞬間湧浪擊中致雙腿骨折；另有泵匠拆回氣管盲板未關手閥接觸化學物質。"
       ],
       rules: [
         "嚴禁船員從事非自身業務範圍之高風險作業（例如碼槽處負責之岸管拆接管作業），作業前須確實執行風險評估。",
         "登離輪與舷外作業嚴禁抓握單薄或未確認穩固之中間欄杆借力，靠近船舷與收放引水梯/舷梯時必須穿戴救生衣與安全帶。",
-        "甲板潮濕或惡劣海象期間，穿著具油漬防滑功能之新型安全鞋，行走指定防滑通道；開啟通往外甲板之水密門前須先觀察海況，切勿背對湧浪。"
+        "甲板潮濕或惡劣海象期間，穿著具油漬防滑功能之新型安全鞋，行走指定防滑通道或管架跨橋；開啟通往外甲板之水密門前須先觀察海況，切勿背對湧浪。"
       ],
       quizzes: [
         {
@@ -1237,14 +1786,14 @@ const zonesData = [
             "甲板濕滑時只要走快一點穿過鋼索上方就不會滑倒"
           ],
           answer: 1,
-          feedback: "正確！案例顯示抓取中間欄杆斷裂會直接導致落海，且惡劣海象背對湧浪開啟水密門極易遭瞬間上浪沖擊骨折。"
+          feedback: "正確！抓取中間欄杆斷裂會直接導致落海，且惡劣海象背對湧浪開啟水密門極易遭瞬間上浪沖擊骨折。"
         }
       ]
     },
     en: {
       name: "4. Main Deck, Manifold & Overboard",
       tag: "Zone 04 | Shore Hose Prohibition, Wet Deck & MOB Prevention",
-      stats: ["Falls (13.3%)", "Slips & Trips (12.0%)", "Man Overboard"],
+      stats: ["Falls (13.3%)", "Slips & Trips (12.0%)", "Hazardous Contact (1.3%)"],
       cases: [
         "[Fall from 1.7m Manifold Platform] Crew assisted terminal workers loosening a shore hose support bolt; the wrench slipped and an AB fell 1.7m, fracturing his right collarbone (crew are prohibited from shore-side hose disconnection outside their scope).",
         "[Wet Deck Fall & Railing Failure] An AB slipped on a wet deck and tripped over a wire while securing the gangway; another crew member grabbed a middle guardrail while boarding, which snapped and caused a Man Overboard.",
@@ -1253,7 +1802,7 @@ const zonesData = [
       rules: [
         "Strictly prohibit crew from performing tasks outside their scope of duty (such as terminal shore-hose connection/disconnection).",
         "Never pull on middle guardrails when boarding/disembarking; wear lifejackets and safety harnesses near ship sides or pilot/accommodation ladders.",
-        "Wear oil-resistant slip-proof safety shoes on wet decks, use designated walkways, and check sea conditions before opening weather doors (never turn your back to waves)."
+        "Wear oil-resistant slip-proof safety shoes on wet decks, use designated walkways/bridges, and check sea conditions before opening weather doors (never turn your back to waves)."
       ],
       quizzes: [
         {
@@ -1284,35 +1833,24 @@ const zonesData = [
   {
     id: 4,
     zh: {
-      name: "5. 住艙自閉門、浴室門與樓梯",
-      tag: "熱區 05 | 門弓器緩衝器規範與全船失電應變",
+      name: "5. 住艙自閉門、水密門與樓梯",
+      tag: "熱區 05 | 門弓器緩衝器規範、全船失電與樓梯防跌",
       stats: ["被夾捲壓 (29.3%)", "跌倒 (12.0%)", "全船失電應變"],
       cases: [
-        "【浴室門緩衝器螺絲調鬆夾斷拇指 2022-03】航行搖晃期間，實習生左手扶在浴室門框上欲伸手拿衣物，因先前有人將門上緩衝固定器（門弓器）鬆緊螺絲調鬆，船體搖晃致門瞬間甩關，夾斷左手拇指第一指節。",
         "【全船失電風壓導致自閉門夾傷食指】化學輪全船跳電失電時，加油匠摸黑趕往機艙開啟自閉門，因機艙風壓使門關閉過快，左手下意識擋門遭門鎖刮夾傷食指。",
-        "【下機艙樓梯踩空扭傷腳踝】輪機長下機艙二層樓梯時不慎踩空扭傷腳踝。"
+        "【水密門與浴室門夾傷手指】水手長於海上開啟水密門時因船體搖擺夾傷左手中指骨折；另有實習生因浴室門弓器螺絲被調鬆遭甩關夾傷拇指。",
+        "【下機艙樓梯踩空扭傷腳踝】輪機長由甲板下機艙二層樓梯時不慎踩空階梯，導致右腳踝嚴重扭傷。"
       ],
       rules: [
-        "全船所有防火門、自閉門及浴室門上之「緩衝固定器（門弓器）鬆緊螺絲嚴禁私自調鬆」，（列入 MMP-FM20 每週檢查）。",
+        "全船所有防火門、自閉門及浴室門上之「緩衝固定器（門弓器）鬆緊螺絲嚴禁私自調鬆」，須保持適當關閉緩衝速度並列入 MMP-FM20 每週檢查；設有門扣者開啟時必須扣住固定。",
         "開關任何艙門時，手部必須握住專用門把，嚴禁將手扶在門框邊緣或下意識伸手擋門。",
         "遇全船跳電（Blackout）視線不良時，應等待緊急發電機啟動（45 秒內）及應急照明恢復後再行動，切勿摸黑匆促奔跑，並依 EWO-019 程序執行。",
-        "上下機艙或住艙階梯時必須手扶扶手、確認踏穩每階階梯，切勿跨階或急促奔跑。"
+        "上下機艙或住艙階梯時必須手扶扶手、確認踏穩每階階梯，嚴禁單人抱持遮擋視線或超過 20 公斤物品上下樓梯。"
       ],
       quizzes: [
         {
           code: "Z5-Q1",
-          q: "Q1. 依據異常案例 2022-03 與每週起居檢查表（MMP-FM20）規定，關於起居室及浴室門上「緩衝固定器（門弓器）」的管理要求為何？",
-          options: [
-            "為了方便進出通風，船員可以自行將門弓器鬆緊螺絲調鬆，或用雜物卡住門縫",
-            "嚴禁將門上緩衝器螺絲調鬆，開關門時手部嚴禁扶靠門框",
-            "只有颱風天需要檢查門弓器，平常航行調鬆沒關係"
-          ],
-          answer: 1,
-          feedback: "正確！調鬆門弓器螺絲會使門在船舶搖晃時失去緩衝瞬間甩關，極易夾斷扶在門框上的手指。"
-        },
-        {
-          code: "Z5-Q2",
-          q: "Q2. 當船舶發生全船跳電（Blackout）導致通道與機艙視線不良時，人員行動應遵守哪項安全原則？",
+          q: "Q1. 當船舶發生全船跳電（Blackout）導致通道與機艙視線不良時，人員行動應遵守哪項安全原則？",
           options: [
             "摸黑全速衝向機艙，遇到自閉門直接伸手擋住門邊推進去",
             "等待緊急發電機啟動（45 秒內）及應急照明恢復再行動，通過自閉門時握緊門把切勿用手擋門邊",
@@ -1320,39 +1858,39 @@ const zonesData = [
           ],
           answer: 1,
           feedback: "正確！全船失電時應待 45 秒內緊急發電機啟動照明恢復再行動，且機艙風壓會加速自閉門關閉，嚴禁用手擋門邊。"
+        },
+        {
+          code: "Z5-Q2",
+          q: "Q2. 關於船上自閉門、水密門緩衝器（門弓器）管理以及上下機艙樓梯之安全規定，下列何者正確？",
+          options: [
+            "為了方便進出通風，船員可以自行將門弓器鬆緊螺絲調鬆，上下樓梯可雙手抱滿物料快速通行",
+            "嚴禁調鬆門弓器螺絲（列入 MMP-FM20 每週檢查），開關門握緊門把勿扶門框；上下樓梯須扶穩扶手、禁單人搬運超重或遮擋視線物品",
+            "只有惡劣天氣時才需要握門把與扶扶手"
+          ],
+          answer: 1,
+          feedback: "正確！調鬆門弓器螺絲會使門失去緩衝瞬間甩關夾斷手指，且上下機艙陡峭階梯必須緊握扶手防踩空。"
         }
       ]
     },
     en: {
       name: "5. Self-Closing Doors & Stairs",
-      tag: "Zone 05 | Door Closer Screws & Blackout Response",
+      tag: "Zone 05 | Door Closers, Blackout Response & Stairs",
       stats: ["Caught/Crushed (29.3%)", "Slips & Trips (12.0%)", "Blackout Safety"],
       cases: [
-        "[Bathroom Door Pinch 2022-03] During rolling, a Cadet held the bathroom door frame while reaching for clothes; because the door closer (buffer) screw had been loosened, the door slammed and fractured his left thumb.",
-        "[Blackout Self-Closing Door Injury] During a vessel blackout, an Oiler rushed to the engine room in the dark and blocked a fast-closing fire door with his left hand, lacerating his index finger.",
+        "[Blackout Self-Closing Door Injury] During a vessel blackout, an Oiler rushed to the engine room in the dark and blocked a fast-closing fire door (accelerated by air pressure) with his left hand, lacerating his index finger.",
+        "[Watertight & Bathroom Door Pinch] A Bosun fractured his middle finger opening a watertight door in rough seas; a Cadet pinched his thumb due to a loosened bathroom door closer screw.",
         "[Engine Room Stair Slip] A Chief Engineer missed a step on the engine room stairs and severely sprained his ankle."
       ],
       rules: [
-        "STRICTLY FORBIDDEN to loosen door closer (buffer) screws on bathroom, cabin, or fire doors; latch door hooks when opened (checked weekly on MMP-FM20).",
+        "STRICTLY FORBIDDEN to loosen door closer (buffer) screws on fire, watertight, or bathroom doors (checked weekly on MMP-FM20); latch door hooks when opened.",
         "Always use dedicated door handles; never place hands on door frames or block closing doors with your fingers.",
         "During a Blackout, wait for the emergency generator (within 45 seconds) and emergency lighting to restore before moving hastily; follow EWO-019.",
-        "Hold handrails firmly and watch every step when ascending/descending engine room and accommodation stairs."
+        "Hold handrails firmly and watch every step on engine room/accommodation stairs; never carry view-obstructing or >20 kg loads alone on stairs."
       ],
       quizzes: [
         {
           code: "Z5-Q1",
-          q: "Q1. Per Abnormal Case 2022-03 and weekly inspection checklist MMP-FM20, what is the rule regarding bathroom and cabin door closers (buffers)?",
-          options: [
-            "Crew may loosen the buffer tightening screw for easier entry and exit",
-            "Strictly forbidden to loosen door closer screws; latch door hooks when open, and never rest hands on door frames",
-            "Only check door closers during typhoons"
-          ],
-          answer: 1,
-          feedback: "Correct! Loosening door closer screws removes damping resistance, causing doors to slam shut during vessel rolling."
-        },
-        {
-          code: "Z5-Q2",
-          q: "Q2. When a vessel Blackout occurs and visibility is poor, how should crew proceed to their emergency stations?",
+          q: "Q1. When a vessel Blackout occurs and visibility is poor, how should crew proceed to their emergency stations?",
           options: [
             "Run in the dark immediately and block self-closing engine room doors with your hand",
             "Wait for the emergency generator (within 45 sec) and emergency lights to restore, and use handles—never block door edges with hands",
@@ -1360,6 +1898,17 @@ const zonesData = [
           ],
           answer: 1,
           feedback: "Correct! Wait up to 45 seconds for emergency lighting and never use your hand to stop a self-closing door under engine room air pressure."
+        },
+        {
+          code: "Z5-Q2",
+          q: "Q2. Which rule applies to shipboard door closers (buffers) and stair transit?",
+          options: [
+            "Crew may loosen door closer screws for easier access and carry bulky boxes blocking vision on stairs",
+            "Strictly forbidden to loosen door closer screws (checked weekly on MMP-FM20); grip handles only, and hold handrails on stairs without carrying >20 kg loads alone",
+            "Handrails and door handles are only required during typhoons"
+          ],
+          answer: 1,
+          feedback: "Correct! Proper door closer tension and three-point stair contact prevent finger crushes and ankle injuries."
         }
       ]
     }
@@ -1387,6 +1936,78 @@ zonesData.forEach(zone => {
 
 let solvedMatrix = zonesData.map(z => z.zh.quizzes.map(() => false));
 let wrongAttempts = [];
+
+function switchMainSection(sec) {
+  currentSection = sec;
+  const secBrief = document.getElementById('section-briefing');
+  const secQuiz = document.getElementById('section-quiz');
+  const btnBrief = document.getElementById('nav-briefing');
+  const btnQuiz = document.getElementById('nav-quiz');
+
+  if (sec === 'briefing') {
+    secBrief.classList.add('active');
+    secQuiz.classList.remove('active');
+    btnBrief.classList.add('active');
+    btnQuiz.classList.remove('active');
+    renderBriefingSection();
+  } else {
+    secQuiz.classList.add('active');
+    secBrief.classList.remove('active');
+    btnQuiz.classList.add('active');
+    btnBrief.classList.remove('active');
+    selectZone(currentZone);
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderBriefingSection() {
+  const b = briefingData[lang];
+
+  // Render Disaster Bars
+  const barsContainer = document.getElementById('disaster-bars');
+  barsContainer.innerHTML = b.stats.map(st => `
+    <div class="stat-row">
+      <div class="stat-label-row">
+        <span>${st.label}</span>
+        <span style="color:${st.top ? 'var(--danger)' : 'var(--primary)'};">${st.pct}%</span>
+      </div>
+      <div class="bar-bg">
+        <div class="bar-fill ${st.top ? 'top' : ''}" style="width: ${Math.min(st.pct * 3, 100)}%;"></div>
+      </div>
+    </div>
+  `).join('');
+
+  // Render Basic Rules & 14 High-Risk Ops
+  document.getElementById('basic-rules-list').innerHTML = b.basicRules.map(r => `<li>${r}</li>`).join('');
+  document.getElementById('high-risk-tags').innerHTML = b.highRiskOps.map(op => `<span class="hr-tag">${op}</span>`).join('');
+
+  // Render Body Part Filters
+  const filterBar = document.getElementById('body-filter-bar');
+  filterBar.innerHTML = b.bodyParts.map(bp => `
+    <button class="body-pill ${selectedBodyPart === bp.id ? 'active' : ''}" onclick="filterBodyPart('${bp.id}')">${bp.label}</button>
+  `).join('');
+
+  // Render Filtered Head-to-Toe Cards
+  const filteredCases = selectedBodyPart === 'all'
+    ? b.cases
+    : b.cases.filter(c => c.part === selectedBodyPart);
+
+  document.getElementById('h2t-cards-grid').innerHTML = filteredCases.map(c => `
+    <div class="h2t-item">
+      <div>
+        <span class="h2t-part-badge">${c.partLabel}</span>
+        <h4>${c.title}</h4>
+        <p>${c.desc}</p>
+      </div>
+      <div class="h2t-fix">${c.fix}</div>
+    </div>
+  `).join('');
+}
+
+function filterBodyPart(partId) {
+  selectedBodyPart = partId;
+  renderBriefingSection();
+}
 
 function getTotalSolved() {
   return solvedMatrix.flat().filter(Boolean).length;
@@ -1437,16 +2058,16 @@ function selectZone(idx) {
   const isDone = doneCount === totalCount;
 
   const panel = document.getElementById('detail-panel');
-  const tabCaseLabel = lang === 'zh' ? '📖 事故案例與保命紅線' : '📖 Accident Cases & Safety Rules';
   const tabQuizLabel = lang === 'zh'
-    ? `🎯 區域隨堂題庫 (${doneCount}/${totalCount} 題)`
+    ? `🎯 區域隨堂測驗 (${doneCount}/${totalCount} 題)`
     : `🎯 Zone Quiz (${doneCount}/${totalCount})`;
+  const tabCaseLabel = lang === 'zh' ? '📖 該區案例與紅線' : '📖 Zone Cases & Rules';
 
   let statsHtml = z.stats.map(s => `<span class="stat-chip">${s}</span>`).join('');
 
   let tabContentHtml = '';
   if (activeTab === 'cases') {
-    const caseHeader = lang === 'zh' ? '⚠️ 船隊真實事故與異常案例（警示還原）' : '⚠️ Fleet Accident & Abnormal Cases';
+    const caseHeader = lang === 'zh' ? '⚠️ 船隊真實事故案例（警示還原）' : '⚠️ Fleet Accident Cases';
     const ruleHeader = lang === 'zh' ? '🛡️ 強制安全注意事項與 SOP 改善對策' : '🛡️ Mandatory Safety Rules & Updated SOPs';
     const goQuizText = lang === 'zh'
       ? `前往本區隨堂測驗 (${doneCount}/${totalCount} 題) ➔`
@@ -1457,6 +2078,7 @@ function selectZone(idx) {
       let highlighted = r
         .replace(/80 公分|80 cm/g, '<span class="highlight-num">$&</span>')
         .replace(/200 公斤|200 kg/g, '<span class="highlight-num">$&</span>')
+        .replace(/20 公斤|20 kg/g, '<span class="highlight-num">$&</span>')
         .replace(/45 秒|45 seconds/g, '<span class="highlight-num">$&</span>')
         .replace(/嚴禁配戴任何手套|STRICTLY PROHIBITED/g, '<span class="highlight-num">$&</span>')
         .replace(/嚴禁私自調鬆|STRICTLY FORBIDDEN/g, '<span class="highlight-num">$&</span>')
@@ -1499,10 +2121,10 @@ function selectZone(idx) {
 
     let nextBtnHtml = '';
     if (isDone && idx < zonesData.length - 1) {
-      const nextLabel = lang === 'zh' ? '✅ 本區已通關！前往下一區 ➔' : '✅ Zone Cleared! Next Zone ➔';
+      const nextLabel = lang === 'zh' ? '✅ 本區已通關！前往下一區測驗 ➔' : '✅ Zone Cleared! Next Zone Quiz ➔';
       nextBtnHtml = `
         <div class="next-zone-bar">
-          <button class="btn-next" style="background:var(--success);" onclick="activeTab='cases'; selectZone(${idx + 1});">${nextLabel}</button>
+          <button class="btn-next" style="background:var(--success);" onclick="selectZone(${idx + 1});">${nextLabel}</button>
         </div>
       `;
     }
@@ -1524,8 +2146,8 @@ function selectZone(idx) {
     <div class="stat-chips">${statsHtml}</div>
 
     <div class="panel-tabs">
-      <button class="tab-btn ${activeTab === 'cases' ? 'active' : ''}" onclick="switchTab('cases')">${tabCaseLabel}</button>
       <button class="tab-btn ${activeTab === 'quiz' ? 'active' : ''}" onclick="switchTab('quiz')">${tabQuizLabel}</button>
+      <button class="tab-btn ${activeTab === 'cases' ? 'active' : ''}" onclick="switchTab('cases')">${tabCaseLabel}</button>
     </div>
 
     ${tabContentHtml}
@@ -1558,9 +2180,9 @@ function checkAnswer(zoneIdx, qIdx, optIdx, btnEl) {
     const doneCount = solvedMatrix[zoneIdx].filter(Boolean).length;
     const totalCount = solvedMatrix[zoneIdx].length;
     const activeTabBtn = document.querySelector('.tab-btn.active');
-    if (activeTabBtn) {
+    if (activeTabBtn && activeTab === 'quiz') {
       activeTabBtn.innerText = lang === 'zh'
-        ? `🎯 區域隨堂題庫 (${doneCount}/${totalCount} 題)`
+        ? `🎯 區域隨堂測驗 (${doneCount}/${totalCount} 題)`
         : `🎯 Zone Quiz (${doneCount}/${totalCount})`;
     }
     const badge = document.querySelector('.zone-score-badge');
@@ -1578,8 +2200,8 @@ function checkAnswer(zoneIdx, qIdx, optIdx, btnEl) {
     fb.style.background = '#fee2e2';
     fb.style.color = '#7f1d1d';
     fb.innerText = lang === 'zh'
-      ? '❌ 答案不正確，請切回「事故案例與保命紅線」確認規範後再選一次！'
-      : '❌ Incorrect. Check the Safety Rules tab and try again.';
+      ? '❌ 答案不正確，可切至「📖 該區案例與紅線」或「📚 船員宣導資料區」確認規範後再選一次！'
+      : '❌ Incorrect. Check Zone Cases & Rules or Briefing Materials and try again.';
 
     if (!solvedMatrix[zoneIdx][qIdx] && !wrongAttempts.includes(qz.code)) {
       wrongAttempts.push(qz.code);
@@ -1605,8 +2227,8 @@ function updateProgress() {
   const signCard = document.getElementById('signoff-card');
 
   progText.innerText = lang === 'zh'
-    ? `通關進度：${zonesDone} / 5 區域（${qDone} / ${qTotal} 題）`
-    : `Progress: ${zonesDone} / 5 Zones (${qDone} / ${qTotal} Qs)`;
+    ? `測驗進度：${zonesDone} / 5 區（${qDone} / ${qTotal} 題）`
+    : `Quiz: ${zonesDone} / 5 Zones (${qDone} / ${qTotal} Qs)`;
 
   if (qDone === qTotal) {
     dot.classList.add('done');
@@ -1651,9 +2273,9 @@ async function submitAndExport() {
   const certBox = document.getElementById('cert-box');
   certBox.style.display = 'block';
   certBox.innerHTML = `
-    <h3 style="color:var(--primary); margin-bottom:0.5rem;">🎓 台塑海運股份有限公司 (FPMC) — 船員安全熟悉數位確認憑證</h3>
+    <h3 style="color:var(--primary); margin-bottom:0.5rem;">🎓 台塑海運股份有限公司 (FPMC) — 船員安全宣導與測驗完成憑證</h3>
     <p style="font-size:0.88rem; margin-bottom:0.6rem; color:#334155;">
-      依據 <strong>TDP-FM12 第 14 項</strong>及海事通告 <strong>2022-MD-035</strong> 規定，本人已完成《船員在船作業常見災害類型危害告知單》及歷年職災與異常案例全船 5 大區域演練與 ${qTotal} 題測驗。
+      依據 <strong>TDP-FM12-1</strong>《船員在船作業常見之災害類型危害告知單》及《從頭到腳職災案例彙編》訓練要求，本人已詳閱宣導資料並完成全船 5 大區域共 ${qTotal} 題測驗。
     </p>
     <div style="background:#f8fafc; padding:0.85rem; border-radius:6px; font-size:0.9rem; line-height:1.8; border:1px solid #cbd5e1;">
       <strong>船名 (Ship's Name)：</strong>${ship}<br>
@@ -1664,7 +2286,7 @@ async function submitAndExport() {
       <strong>完成測驗與簽署時間：</strong>${now}
     </div>
     <p style="font-size:0.8rem; color:#16a34a; font-weight:700; margin-top:0.6rem;">
-      ※ 請截圖、列印或下載 Excel (.csv) 憑證交予船長／安全官存查，並列入船上安全訓練與移交歸檔。
+      ※ 請截圖、列印或下載 Excel (.csv) 憑證交予船長／安全官存查，並列入船上安全訓練歸檔。
     </p>
   `;
 
@@ -1697,7 +2319,7 @@ async function submitAndExport() {
     statusEl.style.color = '#991b1b';
     statusEl.style.border = '1px solid #fecaca';
     statusEl.innerText = lang === 'zh'
-      ? '📡 偵測到船舶衛星網路離線或連線不穩：紀錄已自動存入本機離線佇列，請先下載 Excel (.csv) 或待網路恢復後點擊上方「補傳離線暫存紀錄」。'
+      ? '📡 偵測到船舶衛星網路離線或連線不穩：紀錄已自動存入本機離線佇列，請先下載 Excel (.csv) 或待網路恢復後點擊上方「補傳離線紀錄」。'
       : '📡 Offline detected: Record queued locally for later sync. Download CSV now or retry when online.';
   }
 }
@@ -1715,13 +2337,15 @@ function downloadLatestCsv() {
     latestRecord.wrongLog
   ].map(val => `"${String(val).replace(/"/g, '""')}"`).join(',');
 
-  const csvContent = '\uFEFF' + headers.join(',') + '\n' + row + '\n';
+  const csvContent = '﻿' + headers.join(',') + '
+' + row + '
+';
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
 
   const a = document.createElement('a');
   a.href = url;
-  a.download = `TDP-FM12_${latestRecord.ship}_${latestRecord.name}.csv`;
+  a.download = `TDP-FM12-1_${latestRecord.ship}_${latestRecord.name}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -1740,7 +2364,7 @@ function updateOfflineQueueBtn() {
   const btn = document.getElementById('btn-retry-queue');
   if (q.length > 0) {
     btn.style.display = 'inline-block';
-    btn.innerText = lang === 'zh' ? `🔄 補傳離線暫存紀錄 (${q.length})` : `🔄 Sync Queued (${q.length})`;
+    btn.innerText = lang === 'zh' ? `🔄 補傳離線紀錄 (${q.length})` : `🔄 Sync Queued (${q.length})`;
   } else {
     btn.style.display = 'none';
   }
@@ -1772,44 +2396,82 @@ function toggleLang() {
   document.getElementById('btn-lang').innerText = lang === 'zh' ? 'English' : '繁體中文';
 
   document.getElementById('ui-title').innerText = lang === 'zh'
-    ? '船舶作業常見災害類型互動探索島 (TDP-FM12 / 異常案例彙編)'
-    : 'Shipboard Common Hazards Interactive Explorer (TDP-FM12 / 2022-MD-035)';
+    ? '台塑海運安全宣導與船舶危害探索測驗平台'
+    : 'FPMC Crew Safety Awareness & Shipboard Hazard Quiz';
   document.getElementById('ui-subtitle').innerText = lang === 'zh'
-    ? '台塑海運安全衛生處 | 整合海事通告 2022-MD-035 與歷年「從頭到腳」職災案例訓練平台'
-    : 'Formosa Plastics Marine Corp. | Integrated Fleet Injury & Abnormal Case Training';
+    ? '安全衛生處 | TDP-FM12-1 危害告知單 & 「從頭到腳」職災案例整合學習'
+    : 'HSSE Dept. | TDP-FM12-1 Hazard Notification & Head-to-Toe Injury Cases';
+  document.getElementById('nav-briefing').innerText = lang === 'zh' ? '📚 船員宣導資料區' : '📚 Awareness Materials';
+  document.getElementById('nav-quiz').innerText = lang === 'zh' ? '🚢 船舶探索與測驗區' : '🚢 Ship Map & Quiz';
+
   document.getElementById('ui-intro').innerHTML = lang === 'zh'
-    ? '請點擊船舶地圖上的<strong> 5 個作業熱點</strong>，詳閱最新增補職災與重要設備異常案例，並完成各區精選隨堂題庫（共 10 題）以解鎖開航前熟悉確認憑證與雲端匯出。'
-    : 'Click all <strong>5 high-risk hotspots</strong> on the vessel map, review updated fleet injury/abnormal cases & SOPs, and complete all 10 quiz questions to unlock your certificate and cloud export.';
+    ? '請先於<strong>「📚 船員宣導資料區」</strong>熟讀歷年災害統計與「從頭到腳」職災案例，再進入<strong>「🚢 船舶探索與測驗區」</strong>點擊全船 5 大熱點完成 10 題隨堂測驗與雲端簽署。'
+    : 'Review historical statistics and Head-to-Toe cases in <strong>"📚 Awareness Materials"</strong>, then complete all 10 quiz questions across the 5 vessel hotspots in <strong>"🚢 Ship Map & Quiz"</strong>.';
   document.getElementById('ui-swa').innerText = lang === 'zh'
-    ? '🛑 停止工作授權 (SWA / RAP-7.6)：察覺不安全狀況時，您有責任與義務立即停止作業！'
+    ? '🛑 停止工作授權 (SWA / RAP-7.6)：察覺不安全狀況或行為時，您有責任與義務立即停止作業！'
     : '🛑 Stop Work Authority (SWA / RAP-7.6): You have the responsibility & obligation to stop unsafe work immediately!';
+
+  // Briefing strings
+  document.getElementById('b-stat-title').innerText = lang === 'zh'
+    ? '📊 歷年船員在船作業災害類型統計（TDP-FM12-1 告知單）'
+    : '📊 Historical Shipboard Disaster Statistics (TDP-FM12-1)';
+  document.getElementById('b-stat-desc').innerHTML = lang === 'zh'
+    ? '依據台塑海運 2011 年迄今受傷案件統計，<strong>「被夾捲壓」與「被撞」合計佔比高達 48.0%</strong>，為全船首要防範重點：'
+    : 'Based on FPMC injury data since 2011, <strong>"Caught/Crushed" and "Struck By" account for 48.0%</strong> of all cases:';
+  document.getElementById('b-rule-title').innerText = lang === 'zh'
+    ? '🛡️ 一、基本安全事項與 14 項高風險作業管制'
+    : '🛡️ Basic Safety Rules & 14 High-Risk Operations';
+  document.getElementById('b-hr-subtitle').innerText = lang === 'zh'
+    ? '⚠️ 大副／大管作業前必須親自檢查 PPE 之 14 項高風險作業：'
+    : '⚠️ 14 High-Risk Operations Requiring Pre-Work PPE Check by C/O or 2/E:';
+  document.getElementById('b-h2t-title').innerText = lang === 'zh'
+    ? '🩺 「從頭到腳」真實職災案例與 SOP 改善對策宣導（依受傷部位檢視）'
+    : '🩺 "Head-to-Toe" Fleet Injury Cases & SOP Countermeasures';
+  document.getElementById('b-h2t-desc').innerText = lang === 'zh'
+    ? '點擊下方身體部位篩選器，檢視船隊真實發生之受傷經過與公司修訂後之保命規定：'
+    : 'Filter by body part below to review actual fleet incidents and updated safety rules:';
+  document.getElementById('b-pdf-title').innerText = lang === 'zh'
+    ? '📎 宣導文件原始檔下載（若已上傳至同層目錄可直接開啟）：'
+    : '📎 Original Briefing PDFs (Available when uploaded to the same folder):';
+  document.getElementById('link-pdf-1').innerText = lang === 'zh'
+    ? '📄 船舶作業常見災害類型告知單 (TDP-FM12-1)'
+    : '📄 Common Disasters Notification Sheet (TDP-FM12-1)';
+  document.getElementById('link-pdf-2').innerText = lang === 'zh'
+    ? '📘 從頭到腳職災案例彙編 (PDF)'
+    : '📘 Head-to-Toe Injury Cases Compilation (PDF)';
+  document.getElementById('btn-go-quiz-main').innerText = lang === 'zh'
+    ? '✅ 宣導資料已詳閱，前往「船舶探索與測驗區」 ➔'
+    : '✅ Materials Reviewed — Proceed to Ship Map & Quiz ➔';
+
+  // Quiz strings
   document.getElementById('ui-map-title').innerText = lang === 'zh'
-    ? '🚢 全船作業危害熱點地圖（點擊標記切換區域）'
-    : '🚢 Vessel Hazard Hotspot Map (Click Pins to Switch)';
+    ? '🚢 全船作業危害熱點地圖（點擊標記或下方按鈕切換區域）'
+    : '🚢 Vessel Hazard Hotspot Map (Click Pins or Buttons Below)';
   document.getElementById('ui-leg-todo').innerText = lang === 'zh' ? '未完成題庫' : 'In Progress';
   document.getElementById('ui-leg-done').innerText = lang === 'zh' ? '已全數答對' : 'All Cleared';
   document.getElementById('ui-kpi-title').innerText = lang === 'zh'
-    ? '📌 最新修訂 SOP 與保命紅線速查（整合 2022-MD-035 與案例改善對策）'
-    : '📌 Updated Fleet SOPs & Golden Safety Rules (2022-MD-035 & Case Reviews)';
+    ? '📌 全船保命紅線與修訂 SOP 數據速查'
+    : '📌 Fleet-Wide Golden Safety Numbers & Updated SOPs';
   document.getElementById('ui-kpi-1').innerHTML = lang === 'zh'
-    ? '艙口圍淨空限制區<br>雙側監督對講機複誦才動車'
-    : 'Hatch Coaming Clear Area<br>2-Side Lookout & Radio Read-Back';
+    ? '單人搬運上限 20kg<br>艙口圍 80cm 淨空限制區'
+    : 'Max Manual Lift 20kg<br>80cm Hatch Clear Area';
   document.getElementById('ui-kpi-2').innerHTML = lang === 'zh'
-    ? '鑽床/車床/砂輪嚴禁戴手套<br>電焊敲渣須頭盔或護目鏡'
-    : 'No Gloves on Drills/Lathes<br>Helmet or Goggles for Slag Chipping';
+    ? '鑽床/車床/砂輪嚴禁手套<br>無護籠爬梯背負式雙掛勾'
+    : 'No Gloves on Drills/Lathes<br>Double-Lanyard Harness on Ladders';
   document.getElementById('ui-kpi-3').innerHTML = lang === 'zh'
-    ? '200kg油桶改槽車或搬運器<br>嚴禁調鬆門弓器螺絲'
-    : 'Tank Truck / Drum Carrier (200kg)<br>Never Loosen Door Closer Screws';
+    ? '密閉空間 LEL&lt;30%<br>全船失電待45秒照明恢復'
+    : 'Enclosed Space LEL&lt;30%<br>Wait 45s for Blackout Lighting';
   document.getElementById('ui-sign-title').innerText = lang === 'zh'
-    ? '📋 TDP-FM12 第 14 項 / 異常案例訓練確認簽署與雲端匯出'
-    : '📋 TDP-FM12 Item 14 / Abnormal Case Training Sign-Off & Cloud Export';
+    ? '📋 TDP-FM12-1 危害告知與案例訓練確認簽署（自動同步雲端試算表）'
+    : '📋 TDP-FM12-1 Hazard & Case Training Sign-Off (Auto-Sync to Cloud)';
   document.getElementById('ui-sign-desc').innerText = lang === 'zh'
-    ? '完成上方全部 5 個船舶區域（共 10 題）後，可一鍵同步至岸端雲端試算表並下載 Excel (.csv) 備份。'
-    : 'Complete all 5 vessel zones (10 questions) above to sync results to Google Sheets and download an Excel (.csv) copy.';
+    ? '完成上方全部 5 個船舶區域（共 10 題）後，填寫個人資料即可生成數位確認憑證並自動匯出至岸端雲端試算表。'
+    : 'Complete all 5 vessel zones (10 questions) above to generate your certificate and sync results to Google Sheets.';
   document.getElementById('btn-download-csv').innerText = lang === 'zh' ? '📥 下載 Excel (.csv) 紀錄檔' : '📥 Download Excel (.csv)';
 
   updateOfflineQueueBtn();
   updateProgress();
+  renderBriefingSection();
   selectZone(currentZone);
 }
 
@@ -1817,6 +2479,7 @@ function toggleLang() {
 document.getElementById('inp-date').valueAsDate = new Date();
 updateOfflineQueueBtn();
 updateProgress();
+renderBriefingSection();
 selectZone(0);
 </script>
 </body>
